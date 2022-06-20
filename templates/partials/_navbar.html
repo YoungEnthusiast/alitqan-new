@@ -1,0 +1,177 @@
+{% load static %}
+<nav class="p-0 navbar navbar-expand-lg navbar-dark bg-gold sticky-top">
+  <a class="ml-2 navbar-brand" href="{% url 'index' %}">
+    <img src="{% static 'img/logo.png' %}" width="50" height="80" class="logo" alt="Al-itqan">
+  </a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+    <ul class="navbar-nav">
+      <li
+        {% if '/' == request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link lead" href="{% url 'index' %}"><strong>Home</strong></a>
+      </li>
+      <li
+        {% if 'admission' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link lead" href="{% url 'admission' %}"><strong>Admission</strong></a>
+      </li>
+      <li
+        {% if 'gallery' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link lead" href="{% url 'videos' %}"><strong>Gallery</strong></a>
+      </li>
+      <li
+        {% if 'news-and-events' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link lead" href="{% url 'events' %}"><strong>News and Events</strong></a>
+      </li>
+      <li
+        {% if 'about' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link lead" href="{% url 'about' %}"><strong>About</strong></a>
+      </li>
+      <li
+        {% if 'contact' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link lead" href="{% url 'contact' %}"><strong>Contact</strong></a>
+      </li>
+      {% if user.is_authenticated == False %}
+      <li
+        {% if 'login' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <a class="nav-link lead" href="{% url 'login' %}">
+          <i class="fas fa-key"></i> <strong>Staff/Parents/Students' Login</strong></a>
+      </li>
+      {% endif %}
+    </ul>
+
+
+    <ul class="navbar-nav ml-auto">
+      {% if user.is_authenticated and user.role == "Staff" %}
+      <li
+        {% if 'staff' in request.path %}
+          class="nav-item active dropdown mr-3"
+        {% else %}
+          class="nav-item dropdown mr-3"
+        {% endif %}
+      >
+        <a class="nav-link lead dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {% if user.photograph %}
+            <img src="{{ user.photograph.url }}" alt="Teacher's Photograph" class="profile-small">
+          {% else %}
+            <i class="fas fa-user-tie fa-2x text-primary"></i>
+          {% endif %}
+
+        <strong>{{user.first_name}} (Dashboard)</strong>
+        </a>
+        <ul class="dropdown-menu lead" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item bg-warning lead" href="{% url 'staff_board_first' %}"><strong>First Term</strong></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item bg-warning lead" href="{% url 'staff_board_second' %}"><strong>Second Term</strong></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item bg-warning lead" href="{% url 'staff_board_third' %}"><strong>Third Term</strong></a>
+            <div class="dropdown-divider"></div>
+        </ul>
+      </li>
+      {% elif user.is_authenticated and user.role == "Student" %}
+      <li
+        {% if 'student' in request.path %}
+          class="nav-item active dropdown mr-3"
+        {% else %}
+          class="nav-item dropdown mr-3"
+        {% endif %}
+      >
+        <a class="nav-link lead dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+            {% if user.photograph %}
+              <img src="{{ user.photograph.url }}" alt="student's Photograph" class="profile-small">
+            {% else %}
+              <i class="fas fa-user-circle fa-2x text-primary"></i>
+            {% endif %}
+
+          <strong>{{user.first_name}} (Dashboard)</strong>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item bg-warning lead" href="{% url 'student_board_first' %}"><strong>First Term</strong></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item bg-warning lead" href="{% url 'student_board_second' %}"><strong>Second Term</strong></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item bg-warning lead" href="{% url 'student_board_third' %}"><strong>Third Term</strong></a>
+            <div class="dropdown-divider"></div>
+        </ul>
+      </li>
+      {% elif user.is_authenticated and user.role == "A---n" %}
+      <li
+        {% if 'a---n' in request.path %}
+          class="nav-item active dropdown mr-3"
+        {% else %}
+          class="nav-item dropdown mr-3"
+        {% endif %}
+      >
+        <a class="nav-link lead dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {% if user.photograph %}
+            <img src="{{ user.photograph.url }}" alt="Admin's Photograph" class="profile-small">
+          {% else %}
+            <i class="fas fa-user-circle fa-2x text-primary"></i>
+          {% endif %}
+          <strong>{{user.first_name}} (Dashboard)</strong>
+        </a>
+        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item bg-warning lead" href="{% url 'admin_board_first' %}"><strong>First Term</strong></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item bg-warning lead" href="{% url 'admin_board_second' %}"><strong>Second Term</strong></a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item bg-warning lead" href="{% url 'admin_board_third' %}"><strong>Third Term</strong></a>
+            <div class="dropdown-divider"></div>
+        </ul>
+      </li>
+      {% else %}
+
+      {% endif %}
+      {% if user.is_authenticated %}
+      <li
+        {% if 'logout' in request.path %}
+          class="nav-item active mr-3"
+        {% else %}
+          class="nav-item mr-3"
+        {% endif %}
+      >
+        <button class="btn btn-outline-primary btn-sm"><a class="nav-link lead" href="{% url 'logout' %}">
+          <i class="fas fa-sign-out-alt text-primary"></i> <strong class="text-primary">Logout</strong></a></button>
+      </li>
+      {% endif %}
+    </ul>
+
+  </div>
+</nav>

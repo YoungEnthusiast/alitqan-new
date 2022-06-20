@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Delete Result</title>
+{% endblock title %}
+
+{% block content %}
+<br>
+<div class="d-flex justify-content-center">
+  <div class="text-center card bg-warning text-white form-group col-md-9">
+    <br>
+      {% if first.subject.teacher == request.user %}
+      <h4 >Deleting result of <span class="text-primary">{{first.student}}</span> will remove 1st CA, 2nd CA and Exam altogether. Do you still wish to continue?</h4>
+      <br>
+      <form method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" class="btn btn-danger" value="Yes, confirm"> <a class="btn btn-outline-light" href="{% url 'firsts' %}">No, cancel</a>
+      </form>
+      {% else %}
+      <h2 class="text-center">Access Restricted</h2>
+      <br>
+      {% endif %}
+      <br>
+  </div>
+</div>
+
+{% endblock content%}

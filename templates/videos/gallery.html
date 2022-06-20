@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}
+  <title>{% if category %}{{ category.type }}{% else %}Videos{% endif %} | Al-Itqān Model Academy</title>
+{% endblock title %}
+
+{% block content %}
+{% for audio in audios_home %}
+<audio width="300" height="300" autoplay loop hidden>
+  <source src="{% if audio.audio %}{{ audio.audio.url }}{% else %}{% static "img/no_video.jpeg" %}{% endif %}" type="audio/mp3" autostart="true" loop="true" hidden="true">
+</audio>
+
+{% endfor %}
+{% load home_tags %}
+<section>
+  <div class="col-md-12">
+    <br>
+    {% include 'partials/_alerts.html' %}
+    {% if videos_page_obj %}
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4 class="text-center"><strong class="text-warning">Search Videos by One or Many Fields</strong></h4>
+        <div class="box-element bg-warning" id="form-wrapper">
+          <form method="get" class="form-inline text-dark">
+            {% for field in filtered_videos.form %}
+              <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+            {% endfor %}
+            <input type="submit" class="btn btn-dark" value="Sort">
+          </form>
+        </div>
+          <br>
+      </div>
+      {% if total_videos > 1 %}
+      <div class="form-group col-md-12">
+        <h3 class="form-group text-warning">Total Videos: {{total_videos}}</h3>
+      </div>
+      {% else %}
+      <div class="form-group col-md-12">
+        <h3 class="form-group text-warning">Total Video: {{total_videos}}</h3>
+      </div>
+      {% endif %}
+      {% for video in videos_page_obj %}
+      <div class="col-md-4">
+        <div class="box-element product bg-primary">
+          <br>
+            <video width="300" controls>
+              <source src="{{ video.video.url }}" type="video/mp4">
+            </video>
+          <br>
+          <strong class="text-warning lead">Category: {{video.category}}</strong> <br>
+          <strong class="text-white lead">Title: {{ video.title }} </strong><br>
+          <hr class="text-white">
+          <h5 class="text-white"><i class="fa fa-clock fa-1x text-warning"></i> Uploaded <strong>{{video.created|timesince}}</strong> ago</h5>
+        </div>
+      </div>
+      {% endfor %}
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+    </div>
+  </div>
+  <br>
+  <nav aria-label="...">
+    <ul class="pagination justify-content-center">
+      <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+      {% if videos_page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="{% my_url videos_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{videos_page_obj.previous_page_number}}</a></li>
+      {% endif %}
+      <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url videos_page_obj.number 'page' request.GET.urlencode %}">{{videos_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+      {% if videos_page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="{% my_url videos_page_obj.next_page_number 'page' request.GET.urlencode %}">{{videos_page_obj.next_page_number}}</a></li>
+      {% endif %}
+      <li class="page-item"><a class="page-link" href="{% my_url videos_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+    </ul>
+  </nav>
+  {% else %}
+    <div class="row text-center">
+      <div class="form-group col-md-12">
+        <h3 class="form-group text-primary">No Videos Available</h3>
+      </div>
+    </div>
+  {% endif %}
+</section>
+{% endblock content %}

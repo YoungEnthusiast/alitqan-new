@@ -1,0 +1,55 @@
+{% extends 'base3.html' %}
+{% load static %}
+
+{% block title %}
+  <title>Adimssion into Al-Itqān Model Academy</title>
+
+  <meta name="description" content="Enrol your kids to benefit from an outstanding educational
+  packages. Application forms are now on sale for pupils seeking admissions into Creche,
+  Nursery classes and Basic, rush now to get your forms, admission is strictly limited">
+
+{% endblock title %}
+
+{% block content %}
+{% for audio in audios_home %}
+<audio width="300" height="300" autoplay loop hidden>
+  <source src="{% if audio.audio %}{{ audio.audio.url }}{% else %}{% static "img/no_video.jpeg" %}{% endif %}" type="audio/mp3" autostart="true" loop="true" hidden="true">
+</audio>
+
+{% endfor %}
+<section class="py-0 bg-primary">
+  <div class="col-md-12">
+    <br>
+    <h2 class="p1"><strong><span class="text-warning">APPLICATION FORM NOW ON SALE</span></strong></h2>
+    <div class="text-white">
+      <p class="text-justify lead">
+        Would you like that your kid(s) benefit from an outstanding educational packages, you have got
+        the <strong><i>right partners at Al-Itqān Model Academy.</i></strong> Application forms are now
+        on sale for pupils seeking admissions into <strong><i>Creche, Nursery classes and Basic 1-4.</i></strong>
+        Rush now to get your forms, <strong><i>admission is strictly limited</i></strong> due to the
+        <strong><i>preferred class-size.</i></strong> Application form is available at the following addresses:
+      </p>
+      <ul class="text-justify lead">
+        <font class="text-warning" size="+1">&#x27AC;</font> No 7, Femi Balogun Close, off Ilesanmi B/Stop, University of Ilorin road, Tanke Ilorin Kwara State.
+      </ul>
+      <ul class="text-justify lead">
+        <font class="text-warning" size="+1">&#x27AC;</font> Alhaj Yahaya Shola Sanni C/Mosque, Opp SanRab Filling Station, University of Ilorin Road, Tanke Ilorin, Kwara State.
+      </ul>
+      <ul class="text-justify lead">
+        <font class="text-warning" size="+1">&#x27AC;</font> Nasrul Haq Islamic Book Shop, Ilesanmi B/Stop, University of Ilorin Road, Tanke, Ilorin.
+      </ul>
+      <ul class="text-justify lead">
+        <font class="text-warning" size="+1">&#x27AC;</font> Al-Ameen Islamic Book Shop, Taiwo Oke, opposite kwara State General Hospital, Ilorin.
+      </ul>
+      <ul class="text-justify lead">
+        <font class="text-warning" size="+1">&#x27AC;</font> MSSN Secretariat, University of Ilorin.
+      </ul>
+      <p class="text-justify lead"><i>Space is strictly limited!!!. Hurry up now to better your children!!!</i></p>
+      <p class="text-justify lead">
+        <i>By Allah’s Willing, the future of your kids is secured when you partner with us at Al-Itqān Model Academy!</i>
+      </p>
+    </div>
+  </div>
+  <br>
+</section>
+{% endblock content %}

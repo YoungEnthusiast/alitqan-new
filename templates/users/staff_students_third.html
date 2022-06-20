@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+  <title>Students</title>
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<br>
+<div class="sidebar">
+<a href="{% url 'staff_board_third' %}"><i class="fas fa-tachometer-alt fa-1x"></i> Dashboard</a>
+<a href="{% url 'profile_staff_third' %}"><i class="fas fa-user-tie fa-1x"></i> Profile</a>
+<a href="{% url 'staff_students_third' %}"><strong class="text-warning"><i class="fas fa-users fa-1x"></i> Students</strong></a>
+<a href="{% url 'thirds' %}"><i class="fas fa-signal fa-1x"></i> Scores</a>
+<a href="{% url 'firsts2' %}"><i class="fas fa-puzzle-piece fa-1x"></i> Attitude/Skills</a>
+<a href="{% url 'head_firsts2' %}"><i class="fas fa-certificate fa-1x"></i> Head's Comment</a>
+<a href="{% url 'firsts3' %}"><i class="fas fa-print fa-1x"></i> Report Sheets</a>
+
+</div>
+  <section class="main">
+    {% include 'partials/_alerts.html' %}
+      <div class="row text-center">
+        {% if students_page_obj %}
+          <div class="col-lg-12">
+            {% if total_students > 1 %}
+            <div class="form-group col-md-12">
+              <h3 class="form-group text-warning">Total Students: {{total_students}}</h3>
+            </div>
+            {% else %}
+            <div class="form-group col-md-12">
+              <h3 class="form-group text-warning">Total Student: {{total_students}}</h3>
+            </div>
+            {% endif %}
+            <div class="table-responsive">
+              <table class="table table-bordered">
+                <thead class="thead-primary">
+                  <tr>
+                    <th>ADMISSION NUMBER</th>
+                    <th>NAME</th>
+                    <th>CLASS</th>
+                    <th></th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for student in students_page_obj %}
+                  <tr class="table-success">
+                    <td><strong><a href="{% url 'show_student' student.id %}">{{student.username}}</a></strong></td>
+                    <td><strong><a href="{% url 'show_student' student.id %}"><span class="text-primary">{{student.first_name}} {{student.last_name}}</span></a></strong></td>
+                    <td>{{student.classe}}</td>
+                    <td class="text-center"><a href="third-term/add-result/{{student.id}}"><button type="button" class="btn btn-sm btn-primary text-warning"><strong><i class="fa fa-file-medical fa-1x text-white"></i> &nbspAdd Scores</strong></button></a></td>
+                    <td class="text-center"><a href="{% url 'show_student' student.id %}"><button type="button" class="btn btn-sm btn-primary text-warning"><strong><i class="fa fa-eye fa-1x text-white"></i> &nbspView All Details</strong></button></a></td>
+                  </tr>
+                {% endfor %}
+                </tbody>
+              </table>
+              <nav aria-label="...">
+                <ul class="pagination justify-content-center">
+                  <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                  {% if students_page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="{% my_url students_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{students_page_obj.previous_page_number}}</a></li>
+                  {% endif %}
+                  <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url students_page_obj.number 'page' request.GET.urlencode %}">{{students_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                  {% if students_page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="{% my_url students_page_obj.next_page_number 'page' request.GET.urlencode %}">{{students_page_obj.next_page_number}}</a></li>
+                  {% endif %}
+                  <li class="page-item"><a class="page-link" href="{% my_url students_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+        {% else %}
+        <div class="container">
+          <h3>No student found!</h3>
+        </div>
+
+        {% endif %}
+
+  </section>
+
+
+
+{% endblock content%}

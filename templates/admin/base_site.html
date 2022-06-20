@@ -1,0 +1,23 @@
+{% extends 'admin/base.html' %}
+{% load static %}
+
+{% block branding %}
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HR6GR9PVJC"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-HR6GR9PVJC');
+</script>
+
+<h1 id="head">
+  <img src="{% static 'img/logo.png' %}" width="50" height="60" class="logo" alt="Al-Itqan"><strong>Al-Itqan Admin Area</strong>
+</h1>
+{% endblock %}
+
+{% block extrastyle %}
+  <link rel="stylesheet" href="{% static '/css/admin.css' %}">
+  <link rel="shortcut icon" href="{% static 'img/logo.ico' %}" type="image/x-icon">
+{% endblock %}

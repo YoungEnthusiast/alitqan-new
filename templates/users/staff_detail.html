@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Staff's Details</title>
+{% endblock title %}
+
+{% block content %}
+<br>
+
+</br>
+<div class="d-flex justify-content-center ">
+  <div class="card card-block bg-primary text-white form-group col-md-8">
+    <h2 class="form-group text-center text-warning"><strong>STAFF'S DETAILS</strong></h2>
+    <br>
+    <div class="text-center">
+      {% if staff.photograph %}
+        <img src="{{ staff.photograph.url }}" alt="staff's Photograph" class="profile-big">
+      {% else %}
+        <i class="fas fa-user-tie fa-7x text-warning"></i>
+      {% endif %}
+    </div>
+    <br>
+    <h4 class="text-warning text-center">USERNAME: <i class="text-white"> {{staff.username}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">FIRST NAME: <i class="text-white"> {{staff.first_name}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">LAST NAME: <i class="text-white"> {{staff.last_name}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">EMAIL: <i class="text-white"> {{staff.email}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">GENDER: <i class="text-white"> {{staff.gender}}</i></h4>
+    <br>
+    {% if staff.age > 1 %}
+    <h4 class="text-warning text-center">AGE: <i class="text-white"> {{staff.age}} years</i></h4>
+    {% else %}
+    <h4 class="text-warning text-center">AGE: <i class="text-white"> {{staff.age}} year</i></h4>
+    {% endif %}
+    <br>
+    <h4 class="text-warning text-center">CONTACT PHONE NUMBER: <i class="text-white"> {{staff.phone_number}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">ADDRESS: <i class="text-white"> {{staff.address}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">DATE REGISTERED: <i class="text-white"> {{staff.created}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">DATE LAST MODIFIED: <i class="text-white"> {{staff.updated}}</i></h4>
+  </div>
+</div>
+
+
+  <br>
+
+{% endblock content %}

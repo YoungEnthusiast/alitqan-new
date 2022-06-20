@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% load home_tags %}
+
+{% block title %}
+  <title>News and Events | Al-Itqān Model Academy</title>
+{% endblock title %}
+
+{% block content %}
+{% for audio in audios_home %}
+<audio width="300" height="300" autoplay loop hidden>
+  <source src="{% if audio.audio %}{{ audio.audio.url }}{% else %}{% static "img/no_video.jpeg" %}{% endif %}" type="audio/mp3" autostart="true" loop="true" hidden="true">
+</audio>
+
+{% endfor %}
+<section class="py-0 bg-primary">
+  <div class="col-md-12">
+    <br>
+    {% include 'partials/_alerts.html' %}
+    {% if news_page_obj %}
+    <div class="row text-center">
+      <div class="col-md-12">
+        <h4 class="text-center"><strong class="text-warning">Search News and Events by One or Many Fields</strong></h4>
+        <div class="box-element bg-warning" id="form-wrapper">
+          <form method="get" class="form-inline text-dark">
+            {% for field in filtered_news.form %}
+              <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+            {% endfor %}
+            <input type="submit" class="btn btn-dark" value="Sort">
+          </form>
+        </div>
+          <br>
+          <br>
+          <br>
+      </div>
+      <div class="">
+        {% for new in news_page_obj %}
+
+        <p class="text-white text-left ml-3 text-justify">
+          <font size="+3"><i class="fa fa-newspaper fa-1x text-warning"></i> <i>{{new.headline}}</i></font> </br>
+          {{new.content}}<br>
+          {% if new.image %}
+          <div class="col-md-10 text-left">
+            <img src="{{ new.image.url }}" alt="News Image" class="news_img"></h5>
+          </div>
+          <div class="col-md-10 text-left">
+            <font class="text-warning" size="-2"><i class="fa fa-clock fa-1x text-warning"></i>posted {{new.created|timesince}} ago</font>
+          </div>
+          {% else %}
+          <font class="text-warning" size="-2"><i class="fa fa-clock fa-1x text-warning"></i>posted {{new.created|timesince}} ago</font>
+          {% endif %}<br>
+        </p>
+        {% endfor %}
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+  </div>
+  <br>
+  <nav aria-label="...">
+    <ul class="pagination justify-content-center">
+      <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+      {% if news_page_obj.has_previous %}
+        <li class="page-item"><a class="page-link" href="{% my_url news_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{news_page_obj.previous_page_number}}</a></li>
+      {% endif %}
+      <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url news_page_obj.number 'page' request.GET.urlencode %}">{{news_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+      {% if news_page_obj.has_next %}
+        <li class="page-item"><a class="page-link" href="{% my_url news_page_obj.next_page_number 'page' request.GET.urlencode %}">{{news_page_obj.next_page_number}}</a></li>
+      {% endif %}
+      <li class="page-item"><a class="page-link" href="{% my_url news_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+    </ul>
+  </nav>
+  <br>
+  {% else %}
+    <div class="row text-center">
+      <div class="form-group col-md-12">
+        <h3 class="form-group text-primary">No News Available</h3>
+      </div>
+    </div>
+  {% endif %}
+</section>
+
+{% endblock content %}

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Third Term Scores</title>
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<br>
+<div class="sidebar">
+  <br>
+  <br>
+  <br>
+  <br>
+<a href="{% url 'pupils' %}"><i class="fas fa-users fa-1x"></i> Pupils</a>
+<a href="{% url 'basic_thirds' %}"><strong class="text-warning"><i class="fas fa-tasks fa-1x"></i> Recorded Scores</strong></a>
+<a href="{% url 'basic_third' %}"><i class="fas fa-plus-square fa-1x"></i> New Score</a>
+</div>
+
+  <section class="main">
+    {% include 'partials/_alerts.html' %}
+
+    {% if thirds_page_obj %}
+    <h4 class="text-center text-warning">Search Third Term Scores by One or Many Fields</h4>
+    <div class="col-md-12">
+      <div class="box-element bg-warning" id="form-wrapper">
+        <form method="get" class="form-inline text-white">
+          {% for field in filtered_thirds.form %}
+            <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+          {% endfor %}
+          <input type="submit" class="btn btn-dark" value="Sort">
+        </form>
+      </div>
+    </div>
+
+    {% endif %}
+    <br>
+    <div class="row text-center">
+      {% if thirds_page_obj %}
+        <div class="col-md-12">
+          {% if total_thirds > 1 %}
+          <div class="form-group col-md-12">
+            <h3 class="form-group text-warning">Total Pupils: {{total_thirds}}</h3>
+          </div>
+          {% else %}
+          <div class="form-group col-md-12">
+            <h3 class="form-group text-warning">Total Pupil: {{total_thirds}}</h3>
+          </div>
+          {% endif %}
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="thead-primary">
+                <tr>
+                  <th>SESSION</th>
+                  <th>CREATED</th>
+                  <th>ADMISSION NUMBER & FULL NAME</th>
+                  <th>CLASS</th>
+                  <th>TOTAL SCORES</th>
+                  <th>ALL CUMULATIVE</th>
+                  <th>LAST UPDATED</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for third in thirds_page_obj %}
+                <tr class="table-success">
+                  <td>{{third.session}}</td>
+                  <td>{{third.created}}</td>
+                  <td><strong>{{third.pupil}}</strong></td>
+                  <td>{{third.pupil.classe}}</td>
+                  <td>{{third.cumulative}}</td>
+                  <td>{{third.all_cumulative}}</td>
+                  <td>{{third.updated}}</td>
+                  <td class="text-center"><a href="third-term/update/{{third.id}}"><button type="button" class="btn btn-sm btn-primary text-warning"><strong>Modify Scores</strong></button></a></td>
+                  <td class="text-center"><a href="{% url 'basic_show_third' third.id %}"><button type="button" class="btn btn-sm btn-primary text-warning"><strong>View Report</strong></button></a></td>
+                </tr>
+              {% endfor %}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                {% if thirds_page_obj.has_previous %}
+                  <li class="page-item"><a class="page-link" href="{% my_url thirds_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{thirds_page_obj.previous_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url thirds_page_obj.number 'page' request.GET.urlencode %}">{{thirds_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                {% if thirds_page_obj.has_next %}
+                  <li class="page-item"><a class="page-link" href="{% my_url thirds_page_obj.next_page_number 'page' request.GET.urlencode %}">{{thirds_page_obj.next_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="{% my_url thirds_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      {% else %}
+      <div class="container">
+        <h3>No pupil found!</h3>
+      </div>
+
+      {% endif %}
+    </div>
+  </section>
+
+
+
+{% endblock content%}

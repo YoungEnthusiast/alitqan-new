@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>{{user.username}}</title>
+{% endblock title %}
+
+{% block content %}
+{% if user.role == "Staff" %}
+  <br>
+<div class="sidebar">
+<a href="{% url 'staff_board_second' %}"><strong class="text-warning"><i class="fas fa-tachometer-alt fa-1x"></i> Dashboard</strong></a>
+<a href="{% url 'profile_staff_second' %}"><i class="fas fa-user-tie fa-1x"></i> Profile</a>
+<a href="{% url 'staff_students_second' %}"><i class="fas fa-users fa-1x"></i> Students</a>
+<a href="{% url 'seconds' %}"><i class="fas fa-signal fa-1x"></i> Scores</a>
+<a href="{% url 'seconds2' %}"><i class="fas fa-puzzle-piece fa-1x"></i> Attitude/Skills</a>
+<a href="{% url 'head_seconds2' %}"><i class="fas fa-certificate fa-1x"></i> Head's Comment</a>
+<a href="{% url 'seconds3' %}"><i class="fas fa-print fa-1x"></i> Report Sheets</a>
+
+</div>
+  <section class="main">
+    {% include 'partials/_alerts.html' %}
+    <h2 class="text-center">Welcome to your <span class="text-primary"><strong>second term</strong></span> dashboard, <span class="text-warning"><strong><i>{{user.first_name}}</i></strong></span>. Navigate through the dashboard using the left panel</h2>
+    <br>
+    <div class="row">
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h4 class="card-title text-light"><i class="fas fa-sitemap fa-2x text-warning"></i> Subjects I am teaching: <span class="text-warning">{{subjects}}</span></h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{sub1}}<br>{{sub2}}<br>{{sub3}}<br>{{sub4}}<br>{{sub5}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h4 class="card-title text-light"><i class="fas fa-user-tie fa-2x text-warning"></i> Where I am class teacher: <span class="text-warning">{{classes}}</span></h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{cla1}}<br>{{cla2}}<br>{{cla3}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h4 class="card-title text-light"><i class="fas fa-users fa-2x text-warning"></i> Students in my score sheet: <span class="text-warning">{{studs}}</span></h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">
+                <span class="text-primary"><i class="fas fa-award fa-1x"></i> Outstanding</span><br>
+                <span class="text-primary"></span> {{fir}}<br>
+                <span class="text-primary"></span> {{sec}}<br>
+                <span class="text-primary"></span> {{thi}}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </section>
+  {% endif %}
+
+{% endblock content%}

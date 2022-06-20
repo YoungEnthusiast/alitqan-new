@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Student's Details</title>
+{% endblock title %}
+
+{% block content %}
+<br>
+
+</br>
+<div class="d-flex justify-content-center ">
+  <div class="card card-block bg-primary text-white form-group col-md-8">
+    <h2 class="form-group text-center text-warning"><strong>STUDENT'S DETAILS</strong></h2>
+    <br>
+    <div class="text-center">
+      {% if student.photograph %}
+        <img src="{{ student.photograph.url }}" alt="student's Photograph" class="profile-big">
+      {% else %}
+        <i class="fas fa-user-circle fa-7x text-warning"></i>
+      {% endif %}
+    </div>
+    <br>
+    <h4 class="text-warning text-center">ADMISSION NUMBER: <i class="text-white"> {{student.username}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">FIRST NAME: <i class="text-white"> {{student.first_name}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">LAST NAME: <i class="text-white"> {{student.last_name}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">EMAIL: <i class="text-white"> {{student.email}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">GENDER: <i class="text-white"> {{student.gender}}</i></h4>
+    <br>
+    {% if student.age > 1 %}
+    <h4 class="text-warning text-center">AGE: <i class="text-white"> {{student.age}} years</i></h4>
+    {% else %}
+    <h4 class="text-warning text-center">AGE: <i class="text-white"> {{student.age}} year</i></h4>
+    {% endif %}
+    <br>
+    <h4 class="text-warning text-center">CLASS: <i class="text-white"> {{student.classe}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">CLASS TEACHER: <i class="text-white"> {{student.classe.teacher}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">CONTACT PHONE NUMBER: <i class="text-white"> {{student.phone_number}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">ADDRESS: <i class="text-white"> {{student.address}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">DATE REGISTERED: <i class="text-white"> {{student.created}}</i></h4>
+    <br>
+    <h4 class="text-warning text-center">DATE LAST MODIFIED: <i class="text-white"> {{student.updated}}</i></h4>
+  </div>
+</div>
+
+
+  <br>
+
+{% endblock content %}

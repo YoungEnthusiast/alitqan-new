@@ -1,0 +1,115 @@
+{% extends 'base3.html' %}
+{% load static %}
+
+{% block title %}
+  <title>About Al-Itqān Model Academy</title>
+
+  <meta name="description" content="The school is founded to incorporate Islamic knowledge
+  into the conventional school curriculum while still maintaining excellence in both.
+  Deploying the expertise and experience of its founder, Imam (Dr.) Kamoldeen Ajijolakewu
+  and the competence of its management committee will help in bridging a lot of societal
+  academical gaps and address challenges faced by some purported Islamic schools.">
+{% endblock title %}
+
+{% block content %}
+{% for audio in audios_home %}
+<audio width="300" height="300" autoplay loop hidden>
+  <source src="{% if audio.audio %}{{ audio.audio.url }}{% else %}{% static "img/no_video.jpeg" %}{% endif %}" type="audio/mp3" autostart="true" loop="true" hidden="true">
+</audio>
+
+{% endfor %}
+<section class="py-0 bg-primary">
+  <div class="col-md-12">
+    <br>
+    <h2 class="p1"><strong><span class="text-warning">INTRODUCTION</span></strong></h2>
+    <div class="text-white">
+      <p class="text-justify lead">
+        Al-Itqān Model Academy is established as a vibrant alternative educational centre
+        which seeks to incorporate the ideal Islamic knowledge into the conventional school
+        curriculum without forsaking excellence in either of both. It is out to fill up the
+        vacuum created in the conventional school systems about Islamic ideals. It aimed also
+        to bridge the gap created by some purported Islamic schools whose actions are mostly
+        characterized by ebullience and inordinate zeal but sound knowledge on how to address
+        the obvious challenges affecting the Muslim children in the educational sector. Sadly,
+        this uninformed exuberance underscores the evident incompetence of several “Islamic schools”
+        around! On the other hand, Al-Itqān model Academy seeks to deploy the expertise and
+        experience of its led founder, Imam (Dr.) Kamoldeen Ajijolakewu and the competence of
+        its management committee in <strong><i>a non-usual but evidently effective</i></strong>
+        way to address these challenges, in order to attain the desired excellence among the Muslim populace.
+      </p>
+      <ul class="text-justify lead">
+        <strong class="text-warning text-justify lead"><i>Mission:</i></strong> Towards building inspired Muslim
+        generation adorned with religious ideals and the academic excellence required to adapt
+        and make meaningful change in a diverse society.
+      </ul>
+      <ul class="text-justify lead">
+        <strong class="text-warning"><i>Vision:</i></strong> To be a unique educational centre
+        where students are adorned with competitive excellence in both Islamic virtues and
+        qualitative western education.
+      </ul>
+      <br>
+      <h3 class="p1"><strong><span class="text-warning">COMPETITIVE PRIMACY AND ATTRACTIONS</span></strong></h3>
+      <p class="text-justify lead">
+        Al-Itqān Model Academy pride itself in several exemplary and unique features. The
+        strength of our competitiveness is <strong><i>our academic model, personnel</i></strong>
+        and <strong><i>other features</i></strong> as detailed below:
+      </p>
+      <ul class="text-justify lead">
+        <strong class="text-warning"><i>Bi-modular Curriculum:</i></strong> Two parallel school
+        systems (Islamic and Arabic; Western education) shall be operated within the operational limit
+        of time. Each curriculum is separately designed in a manner, consistent with the best practises
+        in academics all over the world. The school hope to run parallel sessions for both the Islamic
+        knowledge and Western studies. By Allah’s Willing, students at Al-Itqān Academy will master and
+        speak fluently in both Arabic and English Languages. Courtesy of our syllabus and novel
+        teaching approach, the student will faultlessly <i>memorise the Qur’an</i> and will be excellent
+        models in conventional knowledge and perfect Islamic creed (<i>Inshaa-LLah!</i>). <i>We have done it
+        before and are still doing it, we hope to do more...!<br>Trust us at Al-Itqān, your child would
+        need no extra lesson “<strong>including Ilekewu</strong>”!!!</i>
+      </ul>
+      <ul class="text-justify lead">
+        <strong class="text-warning"><i>Excellence in Quran Memorization:</i></strong> Quran memorization
+        shall be the centre-point of the Islamic and Arabic section. At graduation, a primary school
+        graduand, by Allah’s Willing, should have committed, <strong><i>at least</i></strong>, half of the Quran to memory!
+      </ul>
+      <ul class="text-justify lead">
+        <strong class="text-warning"><i>Effective Communication in Arabic and English language:</i></strong>
+        The medium of instruction in Arabic-Islamic courses shall strictly be Arabic Language while Western
+        subjects shall be taught only in English Language. This is in order to ensure perfection and fluency
+        in each of the two Languages. Moreover, reading by phonics is integral part of our curriculum.
+      </ul>
+      <ul class="text-justify lead">
+        <strong class="text-warning"><i>Qualified, Experienced and Motivated Teachers:</i></strong>
+         At Al-Itqān, teachers salary is robust and competitive among other benefits. Hence, only
+         deserving, child-loving, qualified and experienced ones are employed in both the Arabic-Islamic
+         and Western sections.
+      </ul>
+      <ul class="text-justify lead">
+        <strong class="text-warning"><i>Enhanced Morals, Virtues and Creativity:</i></strong> Our core
+        mandate at Al-Itqān is to bring the best out our pupils. We teach and impart morals, standard
+        virtues and we dig into their creative talents to exhibit their potentials.
+      </ul>
+      <ul class="text-justify lead">
+        <strong class="text-warning"><i>ICT and Computer Literacy:</i></strong> To keep to the world
+        trend of attaining teaching and  learning efficiency through computer literacy, a computer
+        laboratory unit is established where our students are exposed to moderate and beneficial use
+        of ICT.
+      </ul>
+      <ul class="text-justify lead">
+        <strong class="text-warning"><i>Mode of Operation:</i></strong> Our mode of operation is unique!
+        It starts the day with detail Arabic-Islamic session where Quran and other Arabic courses are
+        taught in an atmosphere only comparable with Saudi Arabia, due to the medium of communication
+        and the style of teaching. Immediately after is the period for Western education system which
+        will run until 4:30 pm. This daily routine is from 7:30 am -4:30 pm daily (Mon – Fri) for a
+        three-term period,  running on a yearly calendar from September to July.
+      </ul>
+      <ul class="text-justify lead">
+        <strong class="text-warning"><i>Remedial Program for Transfer Pupils:</i></strong> In order
+        to accommodate prospective transfer students who may not meet the language (basically Arabic)
+        and other requirements of their proposed classes, an intensive remedial program will be
+        organised on weekends (Saturdays only) and annually, during the session break (July- August).
+      </ul>
+    </div>
+  </div>
+  <br>
+</section>
+{% endblock content %}

@@ -1,0 +1,170 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Update Third Term Scores</title>
+{% endblock title %}
+
+{% block content %}
+<br>
+<div class="sidebar">
+  <br>
+  <br>
+  <br>
+  <br>
+<a href="{% url 'pupils' %}"><i class="fas fa-users fa-1x"></i> Pupils</a>
+<a href="{% url 'basic_thirds' %}"><strong class="text-warning"><i class="fas fa-tasks fa-1x"></i> Recorded Scores</strong></a>
+<a href="{% url 'basic_third' %}"><i class="fas fa-plus-square fa-1x"></i> New Score</a>
+</div>
+
+  <section class="main">
+    <div class="container">
+      <div class="pull-right col-md-12">
+        <div class="card text-primary">
+          <br>
+          {% include 'partials/_alerts.html' %}
+          <form method="post" class="form-group col-md-12 text-warning">
+            <div class="card-header bg-primary text-warning">
+              <h4>
+                <i class="fas fa-edit"></i> Update Scores</h4>
+            </div>
+            <br>
+            {% csrf_token %}
+            <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                <h3 class="text-primary">Select session and pupil</h3>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-6 mb-2">
+                  {{ form.session|as_crispy_field }}
+              </div>
+              <div class="form-group col-sm-6 mb-2">
+                  {{ form.pupil|as_crispy_field }}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                <h3 class="text-primary">Enter scores in 1st CA, 2nd CA, and Exam</h3>
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.english_ca1|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.english_ca2|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.english_exam|as_crispy_field }}
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.mathematics_ca1|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.mathematics_ca2|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.mathematics_exam|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.general_studies_ca1|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.general_studies_ca2|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.general_studies_exam|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.science_ca1|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.science_ca2|as_crispy_field }}
+                </div>
+                <div class="form-group col-sm-4 mb-2">
+                    {{ form.science_exam|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                <h3 class="text-primary">Record number of days present</h3>
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.number_present|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                <h3 class="text-primary">Choose attitude to study</h3>
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.concentration|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.responsiveness|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.comprehension|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.interest|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.homework|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                <h3 class="text-primary">Choose scholastic skills</h3>
+              </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.reading|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.writing|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.spoken|as_crispy_field }}
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group col-sm-12 mb-2">
+                    {{ form.innovative|as_crispy_field }}
+                </div>
+            </div>
+            <input type="submit" class="form-group col-md-12 btn btn-warning" value="Update">
+          </form>
+        </div>
+        <br>
+      </div>
+    </div>
+  </section>
+
+
+{% endblock content%}

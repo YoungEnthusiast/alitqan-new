@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  <title>Videos</title>
+{% endblock title %}
+
+{% block content %}
+{% load home_tags %}
+<br>
+<div class="sidebar">
+<a href="{% url 'admin_board_first' %}"><i class="fas fa-tachometer-alt fa-1x"></i> Dashboard</a>
+<a href="{% url 'profile_admin_first' %}"><i class="fas fa-user-circle fa-1x"></i> Profile</a>
+<a href="{% url 'sessions_first' %}"><i class="fas fa-history fa-1x"></i> Sessions</a>
+<a href="{% url 'classes_first' %}"><i class="fas fa-sitemap fa-1x"></i> Classes</a>
+<a href="{% url 'subjects_first' %}"><i class="fas fa-snowflake fa-1x"></i> Subjects</a>
+<a href="{% url 'staffs_first' %}"><i class="fas fa-user-tie fa-1x"></i> Staff</a>
+<a href="{% url 'admin_students_first' %}"><i class="fas fa-users fa-1x"></i> Students</a>
+<a href="{% url 'account_ad_first' %}"><i class="fas fa-user-plus fa-1x"></i> Add Student/Staff</a>
+<a href="{% url 'events_first' %}"><i class="fas fa-newspaper fa-1x"></i></i> News</a>
+<a href="{% url 'categories_first' %}"><i class="fas fa-spinner fa-1x"></i></i> Videos' Categories</a>
+<a href="{% url 'videos_first' %}"><strong class="text-warning"><i class="fas fa-video fa-1x"></i> Videos</strong></a>
+<a href="{% url 'admin_firsts' %}"><i class="fas fa-signal fa-1x"></i> Scores</a>
+<a href="{% url 'admin_firsts2' %}"><i class="fas fa-puzzle-piece fa-1x"></i> Attitude/Skills</a>
+<a href="{% url 'admin_firsts3' %}"><i class="fas fa-print fa-1x"></i> Reports</a>
+<a href="{% url 'firsts_pay' %}"><i class="fas fa-money-bill-alt fa-1x"></i> Payment</a>
+
+</div>
+  <section class="main">
+    {% include 'partials/_alerts.html' %}
+
+    {% if videos_page_obj %}
+    <h4 class="text-center text-warning">Search by One or Many Fields</h4>
+    <div class="col-md-12">
+      <div class="box-element bg-warning" id="form-wrapper">
+        <form method="get" class="form-inline text-white">
+          {% for field in filtered_videos.form %}
+            <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
+          {% endfor %}
+          <input type="submit" class="btn btn-dark" value="Sort">
+        </form>
+      </div>
+    </div>
+
+    {% endif %}
+    <br>
+    <div class="row text-center">
+      {% if videos_page_obj %}
+        <div class="col-md-12">
+          {% if total_videos > 1 %}
+          <div class="form-group col-md-12">
+            <h3 class="form-group text-warning">Total Videos: {{total_videos}}</h3>
+          </div>
+          {% else %}
+          <div class="form-group col-md-12">
+            <h3 class="form-group text-warning">Total Video: {{total_videos}}</h3>
+          </div>
+          {% endif %}
+          <a href="{% url 'video_first' %}"><button type="button" class="btn btn-warning text-white col-md-12"><strong><i class="fa fa-plus-circle fa-1x text-white"></i> &nbspAdd New Video</strong></button></a>
+          <div class="table-responsive">
+            <table class="table table-bordered">
+              <thead class="thead-primary">
+                <tr>
+                  <th>DATE ADDED</th>
+                  <th>CATEGORY</th>
+                  <th>TITLE</th>
+                  <th>VIDEO</th>
+                  <th>HOMEPAGE</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+              {% for video in videos_page_obj %}
+                {% if video.home_page %}
+                <tr class="table-success">
+                  <td>{{video.created|timesince}}</td>
+                  <td>{{video.category}}</td>
+                  <td>{{video.title}}</td>
+                  <td><video width="100" controls>
+                    <source src="{{ video.videoURL }}" type="video/mp4">
+                  </video></td>
+                  <td>Yes</td>
+                  <td class="text-center"><a href="gallery/update/{{video.id}}"><button type="button" class="btn btn-sm btn-primary text-warning"><strong><i class="fa fa-edit fa-1x text-white"></i> &nbspModify</strong></button></a></td>
+                  <td class="text-center"><a href="gallery/delete/{{video.id}}"><button type="button" class="btn btn-sm btn-danger text-white"><strong><i class="fa fa-trash fa-1x text-white"></i> &nbspDelete</strong></button></a></td>
+                </tr>
+                {% else %}
+                <tr class="table-success">
+                  <td>{{video.created|timesince}}</td>
+                  <td>{{video.category}}</td>
+                  <td>{{video.title}}</td>
+                  <td><video width="100" controls>
+                    <source src="{{ video.videoURL }}" type="video/mp4">
+                  </video></td>
+                  <td>No</td>
+                  <td class="text-center"><a href="gallery/update/{{video.id}}"><button type="button" class="btn btn-sm btn-primary text-warning"><strong><i class="fa fa-edit fa-1x text-white"></i> &nbspModify</strong></button></a></td>
+                  <td class="text-center"><a href="gallery/delete/{{video.id}}"><button type="button" class="btn btn-sm btn-danger text-white"><strong><i class="fa fa-trash fa-1x text-white"></i> &nbspDelete</strong></button></a></td>
+                </tr>
+                {% endif %}
+              {% endfor %}
+              </tbody>
+            </table>
+            <nav aria-label="...">
+              <ul class="pagination justify-content-center">
+                <li class="page-item"><a class="page-link" href="{% my_url 1 'page' request.GET.urlencode %}" tabindex="-1" aria-disabled="true">First</a></li>
+                {% if videos_page_obj.has_previous %}
+                  <li class="page-item"><a class="page-link" href="{% my_url videos_page_obj.previous_page_number 'page' request.GET.urlencode %}">{{videos_page_obj.previous_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item active" aria-current="page"><a class="page-link" href="{% my_url videos_page_obj.number 'page' request.GET.urlencode %}">{{videos_page_obj.number}}<span class="sr-only">(current)</span></a></li>
+                {% if videos_page_obj.has_next %}
+                  <li class="page-item"><a class="page-link" href="{% my_url videos_page_obj.next_page_number 'page' request.GET.urlencode %}">{{videos_page_obj.next_page_number}}</a></li>
+                {% endif %}
+                <li class="page-item"><a class="page-link" href="{% my_url videos_page_obj.paginator.num_pages 'page' request.GET.urlencode %}">Last</a></li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      {% else %}
+      <div class="container">
+        <h3>No video found!</h3>
+        <br>
+        <a href="{% url 'video_first' %}"><button type="button" class="btn btn-warning text-white col-md-12"><strong><i class="fa fa-plus-circle fa-1x text-white"></i> &nbspAdd New Video</strong></button></a>
+      </div>
+
+      {% endif %}
+    </div>
+  </section>
+
+
+
+{% endblock content%}

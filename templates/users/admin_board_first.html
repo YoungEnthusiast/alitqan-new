@@ -1,0 +1,157 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}
+  <title>{{user.username}}</title>
+{% endblock title %}
+
+{% block content %}
+{% if user.role == "A---n" %}
+  <br>
+<div class="sidebar">
+<a href="{% url 'admin_board_first' %}"><strong class="text-warning"><i class="fas fa-tachometer-alt fa-1x"></i> Dashboard</strong></a>
+<a href="{% url 'profile_admin_first' %}"><i class="fas fa-user-circle fa-1x"></i> Profile</a>
+<a href="{% url 'sessions_first' %}"><i class="fas fa-history fa-1x"></i> Sessions</a>
+<a href="{% url 'classes_first' %}"><i class="fas fa-sitemap fa-1x"></i> Classes</a>
+<a href="{% url 'subjects_first' %}"><i class="fas fa-snowflake fa-1x"></i> Subjects</a>
+<a href="{% url 'staffs_first' %}"><i class="fas fa-user-tie fa-1x"></i> Staff</a>
+<a href="{% url 'admin_students_first' %}"><i class="fas fa-users fa-1x"></i> Students</a>
+<a href="{% url 'account_ad_first' %}"><i class="fas fa-user-plus fa-1x"></i> Add Student/Staff</a>
+<a href="{% url 'events_first' %}"><i class="fas fa-newspaper fa-1x"></i> News</a>
+<a href="{% url 'categories_first' %}"><i class="fas fa-spinner fa-1x"></i> Videos' Categories</a>
+<a href="{% url 'videos_first' %}"><i class="fas fa-video fa-1x"></i> Videos</a>
+<a href="{% url 'admin_firsts' %}"><i class="fas fa-signal fa-1x"></i> Scores</a>
+<a href="{% url 'admin_firsts2' %}"><i class="fas fa-puzzle-piece fa-1x"></i> Attitude/Skills</a>
+<a href="{% url 'admin_firsts3' %}"><i class="fas fa-print fa-1x"></i> Reports</a>
+<a href="{% url 'firsts_pay' %}"><i class="fas fa-money-bill-alt fa-1x"></i> Payment</a>
+
+</div>
+  <section class="main">
+    {% include 'partials/_alerts.html' %}
+    <h2 class="text-center">Welcome to your <span class="text-primary"><strong>first term</strong></span> dashboard, <span class="text-warning"><strong><i>{{user.first_name}}</i></strong></span>. Navigate through the dashboard using the left panel</h2>
+    <br>
+
+    <div class="row">
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h4 class="card-title text-light"><i class="fas fa-users fa-2x text-warning"></i> Users</h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{people}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h4 class="card-title text-light"><i class="fas fa-user fa-1x text-warning"></i><i class="fas fa-user fa-1x text-warning"></i><i class="fas fa-user fa-1x text-warning"></i> Students</h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{students}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h4 class="card-title text-light"><i class="fas fa-user-tie fa-1x text-warning"></i><i class="fas fa-user-tie fa-1x text-warning"></i><i class="fas fa-user-tie fa-1x text-warning"></i> Staff</h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{staff}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h4 class="card-title text-light"><i class="fas fa-history fa-2x text-warning"></i> Current Session</h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{session}} | First Term</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-success">
+              <h4 class="card-title text-light"><i class="fas fa-money-bill fa-2x text-primary"></i> Students Already Paid</h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{p_studs}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-danger">
+              <h4 class="card-title text-light"><i class="fas fa-search fa-2x text-warning"></i> Students Owing</h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{o_studs}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h4 class="card-title text-light"><i class="fas fa-sitemap fa-2x text-warning"></i> Classes</h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{classes}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h4 class="card-title text-light"><i class="fas fa-snowflake fa-2x text-warning"></i> Subjects</h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{subjects}}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="col-md">
+          <div class="card text-center text-warning mb-3">
+            <div class="card-header bg-primary">
+              <h4 class="card-title text-light"><i class="fas fa-award fa-2x text-warning"></i> Most Outstanding</h4>
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">
+                <span class="text-primary"></span> {{fir}} | {{fir.student.classe}}<br>
+                <span class="text-primary"></span> {{sec}} | {{sec.student.classe}}<br>
+                <span class="text-primary"></span> {{thi}} | {{thi.student.classe}}
+              </h3>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+{% endblock content%}

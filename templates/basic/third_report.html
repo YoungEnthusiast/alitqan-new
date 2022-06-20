@@ -1,0 +1,339 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+  <title>Pupil's Report</title>
+  <style type="text/css">
+  @media print {
+      #printbtn {
+          display :  none;
+      }
+  }
+  </style>
+{% endblock title %}
+
+{% block content %}
+<form class="text-center">
+  <input id ="printbtn" type="button" class="btn btn-primary" value="Click to show print preview" onclick="window.print();" >
+</form> <br>
+<div class="text-center">
+  <div class="card bg-white text-dark form-group col-md-12 ml-1">
+    <div class="row">
+      <div class="col-md-2">
+        <h5 class="text-right"><img src="{% static 'img/logo.png' %}" alt="Al-itqan Logo" class="logo2"></h5>
+      </div>
+      <div class="col-md-8">
+        <h2 class="text-center text-primary"><font size="+3"><strong>مدارس الإتقان النموذجية</strong></font></h2>
+        <h2 class="text-center text-primary p1 lh2"><strong>AL-ITQĀN MODEL ACADEMY</strong></h2>
+        <p class="text-center text-primary lh3">7, Balogun Close, off Ilesanmi Bus Stop, University of Ilorin Permanent Site (PS) Road Tanke Ilorin, Kwara State.</p>
+        <p class="text-center text-primary lh"><strong class="text-primary">Phone No.:</strong> +234(0)9098374769, <strong class="text-primary">Email:</strong> info@alitqan.sch.ng</p>
+      </div>
+      {% for each in third %}
+      <div class="col-md-1 mt-4">
+        {% if each.pupil.photograph %}
+          <h5 class="text-left"><img src="{{ each.pupil.photograph.url }}" alt="Pupil's Photograph" class="logo3"></h5>
+        {% endif %}
+      </div>
+      <div class="col-md-1">
+
+      </div>
+    </div>
+
+    <h2 class="text-center text-primary p1"><strong>REPORT SHEET</strong></h2>
+    <div class="row">
+      <div class="col-md-5">
+        <h5 class="text-primary text-left"><strong>NAME: <span class="text-warning">{{each.pupil.user.first_name}} {{each.pupil.user.last_name}}</span></strong></h5>
+        <h5 class="text-primary text-left"><strong>ADMISSION NO: <span class="text-warning">{{each.pupil.user}}</span></strong></h5>
+        <h5 class="text-primary text-left"><strong>GENDER: <span class="text-warning">{{each.pupil.gender}}</span></strong></h5>
+      </div>
+      <div class="col-md-3">
+        <h5 class="text-primary text-left"><strong>TERM: <span class="text-warning">THIRD</span></strong></h5>
+        <h5 class="text-primary text-left"><strong>SESSION: <span class="text-warning">{{each.session}}</span></strong></h5>
+      </div>
+      <div class="col-md-1">
+
+      </div>
+      <div class="col-md-3">
+        <h5 class="text-primary text-left"><strong>AGE: <span class="text-warning">{{each.pupil.age}} years</span> </strong></h5>
+        <h5 class="text-primary text-left"><strong>CLASS: <span class="text-warning">{{each.pupil.classe}}</span></strong></h5>
+        <h5 class="text-primary text-left"><strong>NUMBER IN CLASS: <span class="text-warning">{{class_pupils_count}}</span></strong></h5>
+      </div>
+    </div>
+    <hr class="bg-primary lh">
+    <h5 class="text-center text-primary lh"><strong>COGNITIVE ABILITY</strong></h5>
+    <hr class="bg-primary lh">
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th class="text-center text-primary"><strong>S/N</strong></th>
+            <th class="text-center text-primary"><strong>SUBJECTS</strong></th>
+            <th class="text-center text-primary"><div class="rotate"><p>1st CA (20%)</p></div></th>
+            <th class="text-center text-primary"><div class="rotate"><p>2nd CA (20%)</p></div></th>
+            <th class="text-center text-primary"><div class="rotate"><p>EXAM (60%)</p></div></th>
+            <th class="text-center text-primary"><div class="rotate"><p>Current Cumulative (100%)</p></div></th>
+            <th class="text-center text-primary"><div class="rotate"><p>1st Term Cumulative (100%)</p></div></th>
+            <th class="text-center text-primary"><div class="rotate"><p>2nd Term Cumulative (100%)</p></div></th>
+            <th class="text-center text-primary"><div class="rotate"><p>Overall (100%)</p></div></th>
+            <th class="text-center text-primary"><div class="rotate"><p>Class Average</p></div></th>
+            <th class="text-center text-primary"><div class="rotate"><p>Subject Position</p></div></th>
+            <th class="text-center text-primary"><div class="rotate"><p>Grade</p></div></th>
+            <th class="text-center text-primary"><strong>SUMMARY</strong></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="table-light">
+            <td class="text-warning tab">1</td>
+            <td class="text-warning"><strong>ENGLISH</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.english_ca1}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.english_ca2}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.english_exam}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.english_tot}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.english_tot1}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.english_tot2}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.english_cum}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{english_avg}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{english_pos}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.grade_english}}</strong></td>
+            <td class="text-warning"><strong>No of Times School Opens</strong></td>
+            <td class="text-warning text-center"><strong>{{each.session.number}}</strong></td>
+          </tr>
+          <tr class="table-light">
+            <td class="text-warning">2</td>
+            <td height="0.1px" class="text-warning"><strong>MATHEMATICS</strong></td>
+            <td class="text-warning text-center"><strong>{{each.mathematics_ca1}}</strong></td>
+            <td class="text-warning text-center"><strong>{{each.mathematics_ca2}}</strong></td>
+            <td class="text-warning text-center"><strong>{{each.mathematics_exam}}</strong></td>
+            <td class="text-warning text-center"><strong>{{each.mathematics_tot}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.mathematics_tot1}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.mathematics_tot2}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.mathematics_cum}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{mathematics_avg}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{mathematics_pos}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.grade_mathematics}}</strong></td>
+            <td class="text-warning"><strong>No of Days Present</strong></td>
+            <td class="text-warning text-center"><strong>{{each.number_present}}</strong></td>
+          </tr>
+          <tr class="table-light">
+            <td class="text-warning">3</td>
+            <td class="text-warning"><strong>GENERAL STUDIES</strong></td>
+            <td class="text-warning text-center"><strong>{{each.general_studies_ca1}}</strong></td>
+            <td class="text-warning text-center"><strong>{{each.general_studies_ca2}}</strong></td>
+            <td class="text-warning text-center"><strong>{{each.general_studies_exam}}</strong></td>
+            <td class="text-warning text-center"><strong>{{each.general_studies_tot}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.general_studies_tot1}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.general_studies_tot2}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.general_studies_cum}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{general_studies_avg}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{general_studies_pos}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.grade_general_studies}}</strong></td>
+            <td class="text-warning"><strong>Total Marks Obtainable</strong></td>
+            <td class="text-warning text-center"><strong>{{400}}</strong></td>
+          </tr>
+          <tr class="table-light">
+            <td class="text-warning">4</td>
+            <td class="text-warning"><strong>BASIC SCIENCE & TECHNOLOGY</strong></td>
+            <td class="text-warning text-center"><strong>{{each.science_ca1}}</strong></td>
+            <td class="text-warning text-center"><strong>{{each.science_ca2}}</strong></td>
+            <td class="text-warning text-center"><strong>{{each.science_exam}}</strong></td>
+            <td class="text-warning text-center"><strong>{{each.science_tot}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.science_tot1}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.science_tot2}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.science_cum}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{science_avg}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{science_pos}}</strong></td>
+            <td class="text-warning text-center tab"><strong>{{each.grade_science}}</strong></td>
+            <td class="text-warning"><strong>Total Marks Obtained</strong></td>
+            <td class="text-warning text-center"><strong>{{each.cum_perc}}</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="table-responsive">
+      <table class="table table-sm table-bordered">
+        <tr class="table-light">
+          <td class="text-primary"><h3><strong>SESSION GENERAL REMARK</strong></h3></td>
+          <td class="text-center text-primary"><h3 class="p2"><strong><i>{{each.grade_general}}</i></strong></h3></td>
+          <td class="text-right text-primary"><h4><strong>OVERALL PERCENTAGE SCORE: {{each.cum_perc}}%</strong></h4></td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered">
+            <tr class="table-light">
+              <td class="text-primary text-center"><h6 class="p3">ATTITUDE TO STUDY</h6></td>
+              <td class="text-primary text-center"><h6 class="p3">REMARK</h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning"><h6><strong>CONCENTRATION</strong></h6></td>
+              <td class="text-warning"><h6><i>{{each.concentration}}</i></h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning"><h6><strong>RESPONSIVENESS</strong></h6></td>
+              <td class="text-warning"><h6><i>{{each.responsiveness}}</i></h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning"><h6><strong>COMPREHENSION</strong></h6></td>
+              <td class="text-warning"><h6><i>{{each.comprehension}}</i></h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning"><h6><strong>INTEREST IN LEARNING</strong></h6></td>
+              <td class="text-warning"><h6><i>{{each.interest}}</i></h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning"><h6><strong>HOMEWORK COMPLETION</strong></h6></td>
+              <td class="text-warning"><h6><i>{{each.homework}}</i></h6></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered">
+            <tr class="table-light">
+              <td colspan="3" class="text-primary text-center"><h6 class="p3">KEY TO GRADE</h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-primary text-center"><h6>SCORE</h6></td>
+              <td class="text-primary text-center"><h6>GRADE</h6></td>
+              <td class="text-primary text-center"><h6>REMARK</h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning text-center"><h6><strong>85-100</strong></h6></td>
+              <td class="text-center text-warning"><h6 class="p3">A</h6></td>
+              <td><h6 class="text-warning p3">Excellent</h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning text-center"><h6><strong>70-84</strong></h6></td>
+              <td class="text-center text-warning"><h6 class="p3">B</h6></td>
+              <td><h6 class="text-warning p3">Very Good</h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning text-center"><h6><strong>60-69</strong></h6></td>
+              <td class="text-center text-warning"><h6 class="p3">C</h6></td>
+              <td><h6 class="text-warning p3">Good</h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning text-center"><h6><strong>50-59</strong></h6></td>
+              <td class="text-center text-warning"><h6 class="p3">D</h6></td>
+              <td><h6 class="text-warning p3">Average</h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning text-center"><h6><strong>0-49</strong></h6></td>
+              <td class="text-center text-warning"><h6 class="p3">E</h6></td>
+              <td><h6 class="text-warning p3">Poor</h6></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered">
+            <tr class="table-light">
+              <td class="text-primary text-center"><h6 class="p3">SCHOLASTIC SKILLS</h6></td>
+              <td class="text-primary text-center"><h6 class="p3">REMARK</h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning"><h6><strong>READING</strong></h6></td>
+              <td class="text-warning"><h6><i>{{each.reading}}</i></h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning"><h6><strong>WRITING</strong></h6></td>
+              <td class="text-warning"><h6><i>{{each.writing}}</i></h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning"><h6><strong>SPOKEN ENGLISH</strong></h6></td>
+              <td class="text-warning"><h6><i>{{each.spoken}}</i></h6></td>
+            </tr>
+            <tr class="table-light">
+              <td class="text-warning"><h6><strong>INNOVATIVE</strong></h6></td>
+              <td class="text-warning"><h6><i>{{each.innovative}}</i></h6></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <br>
+        <br>
+        <div class="table-responsive">
+          <table class="table table-sm table-bordered">
+            <tr class="table-light">
+              <td  class="text-primary text-center"><h6><strong>NEXT<br>TERM<br>BEGINS</strong></h6></td>
+              <td  class="text-warning text-center"><h6><strong><br>{{each.session.next}}</strong></h6></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <strong> <p class="text-primary text-left">CLASS TEACHER'S COMMENT: <span class="text-warning"><i class="p3">{{each.teacher_comment}}</i></span> </p></strong>
+      </div>
+      <div class="col-md-2">
+        <strong> <p class="text-primary text-left">NAME: <span class="text-warning">{{each.pupil.classe.teacher}}</span></p></strong>
+      </div>
+      <div class="col-md-2">
+        <strong> <p class="text-primary text-right">SIGNATURE: </p></strong>
+      </div>
+      <div class="col-md-1">
+        {% if each.pupil.classe.signature %}
+          <sup><p class="text-left"><img src="{{each.pupil.classe.signature.url}}" alt="Class Teacher's Signature" class="sig"></p></sup>
+        {% endif %}
+      </div>
+      <div class="col-md-1">
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+        <strong> <p class="text-primary text-left">HEAD OF SCHOOL'S COMMENT: <span class="text-warning"><i class="p3">{{each.head_comment}} {{each.head_comment2}}</i></span> </p></strong>
+      </div>
+      <div class="col-md-2">
+        <strong> <p class="text-primary text-left">NAME: <span class="text-warning">{{each.session.head}}</span></p></strong>
+      </div>
+      <div class="col-md-2">
+        <strong> <p class="text-primary text-right">STAMP & SIGNATURE: </p></strong>
+      </div>
+      <div class="col-md-1">
+        {% if each.session.school %}
+          <sup><p class="text-left"><img src="{{each.session.school.url}}" alt="Al-itqan stamp" class="sig2"></p></sup>
+        {% endif %}
+      </div>
+      <div class="col-md-1">
+
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-5">
+      </div>
+      <div class="col-md-2">
+      </div>
+      <div class="col-md-2">
+        <strong> <p class="text-primary text-right">DATE: </p></strong>
+      </div>
+      <div class="col-md-3">
+        <p class="text-left text-warning"><strong>{{each.updated}}</strong></p>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+
+{% endfor %}
+{% endblock content%}

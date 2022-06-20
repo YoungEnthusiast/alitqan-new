@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+  <title>Add News</title>
+{% endblock title %}
+
+{% block content %}
+<br>
+  <section class="">
+    <div class="container">
+      <div class="pull-right col-md-12">
+        <div class="card text-primary">
+          <br>
+          {% include 'partials/_alerts.html' %}
+          <form method="post" class="form-group col-md-12 text-warning" enctype="multipart/form-data">
+            <div class="card-header bg-primary text-warning">
+              <h4>
+                <i class="fas fa-edit"></i> Add News</h4>
+            </div>
+            <br>
+            {% csrf_token %}
+            <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.headline|as_crispy_field }}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.content|as_crispy_field }}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.image|as_crispy_field }}
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-sm-12 mb-2">
+                  {{ form.home_page|as_crispy_field }}
+              </div>
+            </div>
+            <input type="submit" class="form-group col-md-12 btn btn-warning" value="Add">
+          </form>
+        </div>
+        <br>
+      </div>
+    </div>
+  </section>
+
+
+{% endblock content%}
