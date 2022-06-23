@@ -22,6 +22,7 @@ urlpatterns = [
     path('student/second-term/result-sheets', views.showSeconds3User, name='seconds3_user'),
     path('staff/first-term/result/update/<int:id>', views.updateFirst, name='first_update'),
     path('staff/second-term/result/update/<int:id>', views.updateSecond, name='second_update'),
+    path('staff/third-term/result/update/<int:id>', views.updateThird, name='third_update'),
     path('a---n/first-term/result/update/<int:id>', views.updateAdminFirst, name='admin_first_update'),
     path('staff/first-term/result/delete/<int:id>', views.deleteFirst),
     path('staff/second-term/result/delete/<int:id>', views.deleteSecond),

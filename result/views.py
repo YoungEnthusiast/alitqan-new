@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import First, Second, Third
 from users.models import Person
 from management.models import Class
-from .forms import FirstForm, SecondForm, ThirdForm, SecondFormPay,FirstFormUp, FirstFormBeha, FirstFormHead, SecondFormUp, SecondFormBeha, SecondFormHead, FirstFormPay
+from .forms import FirstForm, SecondForm, ThirdForm, SecondFormPay,FirstFormUp, FirstFormBeha, FirstFormHead, SecondFormUp, ThirdFormUp, SecondFormBeha, SecondFormHead, FirstFormPay
 from django.contrib import messages
 from django.core.paginator import Paginator
 from .filters import FirstFilter, FirstFilter2, SecondFilter2, FirstFilterPay, SecondFilter, SecondFilterPay, ThirdFilter
@@ -467,66 +467,76 @@ def updateThird(request, id):
                 reg.total = new_total
                 reg.save()
 
-
-try:
-    first_reg = First.objects.get(session=session, student=stud, subject=subject)
-    terms_total0 = first_reg.total + total
-except:
-    terms_total0 = total + total
-try:
-    second_reg = Second.objects.get(session=session, student=stud, subject=subject)
-    terms_total1 = second_reg.total + terms_total0
-    reg.terms_total = terms_total1
-except:
-    terms_total1 = terms_total0 + total
-    reg.terms_total = terms_total1
-reg.save()
-
-
-                reg1 = Second.objects.get(session=session, student=student, subject=subject)
+                reg1 = Third.objects.get(session=session, student=student, subject=subject)
                 reg1.subject_total = reg1.subject_total - old_total
+                reg1.terms_total = reg1.terms_total - old_total
                 reg1.save()
-                reg2 = Second.objects.get(session=session, student=student, subject=subject)
+                reg2 = Third.objects.get(session=session, student=student, subject=subject)
                 reg2.subject_total = reg2.subject_total + new_total
+                reg2.terms_total = reg2.terms_total + new_total
                 reg2.save()
-                reg3 = Second.objects.get(session=session, student=student, subject=subject)
-                reg4 = Second.objects.filter(session=session, subject=subject).order_by('-total')
-                n = reg4.count()
-                d = round((reg3.subject_total/n),2)
-                subject_position = []
-                subject_pos = 0
 
+
+                #####
+                try:
+                    reg7 = Third.objects.get(session=session, student=student)
+                    reg7.value = 1
+                    reg7.save()
+                except:
+                    pass
+                reg4 = Third.objects.filter(session=session, subject=subject).order_by('-terms_total')
+                n = reg4.count()
+                try:
+
+                    reg5 = Third.objects.filter(session=session, subject=subject)[1]
+                    d = round((reg5.subject_total/(3*n)),2)
+                    subject_position = []
+                    # subject_pos =
+                except:
+                    
+                    reg5 = Third.objects.filter(session=session, subject=subject)[0]
+                    d = round((reg5.subject_total/(3*n)),2)
+                    subject_position = []
+                    # subject_pos = 0
                 for each in reg4:
-                    each.subject_total = reg3.subject_total
+                    each.subject_total = reg5.subject_total
                     each.subject_avg = d
-                    each.grade = reg3.grade()
+                    each.grade = reg5.grade()
                     each.save()
 
                 for each in reg4:
-                    subject_position.append(each.total)
+                    subject_position.append(each.terms_total)
 
                 for i in range(len(subject_position)):
                     for each in reg4:
-                        temp = subject_position.index(each.total)
+                        temp = subject_position.index(each.terms_total)
                         each.subject_pos = temp + 1
                         each.save()
 
-                reg6 = Second.objects.filter(session=session, student=student)
+                reg6 = Third.objects.filter(session=session, student=student)
                 m = reg6.count()
-                all_total = Second.objects.filter(session=session, student=student).aggregate(Sum('total'))['total__sum']
+                all_total = Third.objects.filter(session=session, student=student).aggregate(Sum('terms_total'))['terms_total__sum']
                 cum_perc = round((all_total/m),2)
                 for each in reg6:
                     each.cumulative = all_total
                     each.cum_perc = cum_perc
                     each.static_class = str(each.student.classe)
                     each.static_class_teacher = str(each.student.classe.teacher.first_name) + " " + str(each.student.classe.teacher.last_name)
-                    each.static_head_teacher = str(each.session.second_head.first_name) + " " + str(each.session.second_head.last_name)
+                    each.static_head_teacher = str(each.session.third_head.first_name) + " " + str(each.session.third_head.last_name)
                     each.static_teacher_signature = each.student.classe.signature
                     each.static_school_stamp = each.session.school
                     each.static_student_image = each.student.photograph
                     each.static_age = each.student.age()
                     each.static_number_in_class = class_students_count
                     each.save()
+                try:
+                    reg8 = Third.objects.get(session=session, student=student, value=1)
+                    if reg8.school_fees == True:
+                        reg9 = Third.objects.filter(session=session, student=student)[0]
+                        reg9.school_fees = True
+                        reg9.save()
+                except:
+                    pass
 
             # send_mail(
             #     '[' + str(session) + '] SCORES UPDATE',
@@ -847,7 +857,7 @@ def addFirst(request, id):
         if form.is_valid():
             form.save()
             session = form.cleaned_data.get('session')
-            semester = form.cleaned_data.get('semester')
+            subject = form.cleaned_data.get('subject')
             class_students_count = Person.objects.filter(classe=stud.classe).count()
             reg = First.objects.filter(session=session, subject=subject)[0]
             if reg.subject.teacher != request.user:

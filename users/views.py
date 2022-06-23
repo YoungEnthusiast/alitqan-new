@@ -14,7 +14,7 @@ from django.core.paginator import Paginator
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 #from django.template.loader import render_to_string
-from result.models import First, Second
+from result.models import First, Second, Third
 
 @login_required
 def createAdFirst(request):
