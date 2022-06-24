@@ -468,16 +468,18 @@ def updateThird(request, id):
                 reg.save()
 
                 reg1 = Third.objects.get(session=session, student=student, subject=subject)
-                reg1.subject_total = reg1.subject_total - old_total
-                reg1.terms_total = reg1.terms_total - old_total
+                reg1.subject_total = reg1.subject_total - old_terms_total
+                reg1.terms_total = reg1.terms_total - old_terms_total
                 reg1.save()
+                ###########################################
+
+
+
                 reg2 = Third.objects.get(session=session, student=student, subject=subject)
                 reg2.subject_total = reg2.subject_total + new_total
                 reg2.terms_total = reg2.terms_total + new_total
                 reg2.save()
 
-
-                #####
                 try:
                     reg7 = Third.objects.get(session=session, student=student)
                     reg7.value = 1
@@ -1135,10 +1137,11 @@ def addThird(request, id):
                     reg4 = Third.objects.filter(session=session, subject=subject).order_by('-terms_total')
                     n = reg4.count()
                     try:
-                        # reg3 = Third.objects.filter(session=session, subject=subject)[1]
-                        # reg3.subject_total = reg3.subject_total + terms_total1
-                        # reg3.save()
-                        reg5 = Third.objects.filter(session=session, subject=subject)[1]
+                        reg3 = Third.objects.filter(session=session, subject=subject)[1]
+                        reg10 = Third.objects.filter(session=session, subject=subject)[0]
+                        reg10.subject_total = reg3.subject_total + terms_total1
+                        reg10.save()
+                        reg5 = Third.objects.filter(session=session, subject=subject)[0]
                         d = round((reg5.subject_total/(3*n)),2)
                         subject_position = []
                         # subject_pos =
