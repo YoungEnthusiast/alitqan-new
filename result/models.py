@@ -403,6 +403,7 @@ class Third(models.Model):
     total = models.IntegerField(blank=True, default = 0)
     terms_total = models.IntegerField(blank=True, default = 0)
     subject_total = models.IntegerField(blank=True, default = 0)
+    # terms_subject_total = models.IntegerField(blank=True, default = 0)
     subject_avg = models.FloatField(blank=True, default = 0)
     subject_pos = models.IntegerField(default = 0, null=True, verbose_name="Subject Position")
     grade = models.CharField(max_length=1, blank=True, null=True)

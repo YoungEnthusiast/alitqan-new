@@ -493,7 +493,7 @@ def updateThird(request, id):
                     subject_position = []
                     # subject_pos =
                 except:
-                    
+
                     reg5 = Third.objects.filter(session=session, subject=subject)[0]
                     d = round((reg5.subject_total/(3*n)),2)
                     subject_position = []
@@ -1108,15 +1108,23 @@ def addThird(request, id):
                     try:
                         first_reg = First.objects.get(session=session, student=stud, subject=subject)
                         terms_total0 = first_reg.total + total
+                        terms_subject_total0 = first_reg.subject_total + total
                     except:
+                        first_reg = First.objects.filter(session=session, subject=subject)[0]
                         terms_total0 = total + total
+                        terms_subject_total0 = first_reg.subject_total + total + total
                     try:
                         second_reg = Second.objects.get(session=session, student=stud, subject=subject)
                         terms_total1 = second_reg.total + terms_total0
+                        terms_subject_total1 = second_reg.subject_total + terms_subject_total0
                         reg.terms_total = terms_total1
+                        reg.subject_total = terms_subject_total1
                     except:
+                        second_reg = Second.objects.filter(session=session, subject=subject)[0]
                         terms_total1 = terms_total0 + total
+                        terms_subject_total1 = second_reg.subject_total + terms_subject_total0 + total
                         reg.terms_total = terms_total1
+                        reg.subject_total = terms_subject_total1
                     reg.save()
                     try:
                         reg7 = Third.objects.get(session=session, student=stud)
@@ -1127,17 +1135,17 @@ def addThird(request, id):
                     reg4 = Third.objects.filter(session=session, subject=subject).order_by('-terms_total')
                     n = reg4.count()
                     try:
-                        reg3 = Third.objects.filter(session=session, subject=subject)[1]
-                        reg3.subject_total = reg3.subject_total + terms_total1
-                        reg3.save()
+                        # reg3 = Third.objects.filter(session=session, subject=subject)[1]
+                        # reg3.subject_total = reg3.subject_total + terms_total1
+                        # reg3.save()
                         reg5 = Third.objects.filter(session=session, subject=subject)[1]
                         d = round((reg5.subject_total/(3*n)),2)
                         subject_position = []
                         # subject_pos =
                     except:
-                        reg3 = Third.objects.filter(session=session, subject=subject)[0]
-                        reg3.subject_total = reg3.subject_total + terms_total1
-                        reg3.save()
+                        # reg3 = Third.objects.filter(session=session, subject=subject)[0]
+                        # reg3.subject_total = reg3.subject_total + terms_total1
+                        # reg3.save()
                         reg5 = Third.objects.filter(session=session, subject=subject)[0]
                         d = round((reg5.subject_total/(3*n)),2)
                         subject_position = []
