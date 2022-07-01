@@ -1516,6 +1516,69 @@ def deleteSecond(request, id):
     return render(request, 'result/seconds_confirm_delete.html', {'first': first})
 
 @login_required
+def deleteThird(request, id):
+    first = Third.objects.get(id=id)
+    obj = get_object_or_404(Third, id=id)
+    session = first.session
+    student = first.student
+    subject = first.subject
+    reg = Third.objects.get(session=session, student=student, subject=subject)
+    old_total = reg.total
+    value = reg.value
+
+    if request.method =="POST":
+        obj.delete()
+        try:
+            reg1 = Third.objects.filter(session=session, subject=subject)[0]
+            reg1.subject_total = reg1.subject_total - old_total
+            reg1.terms_total = reg1.terms_total - old_total
+            reg1.save()
+        except:
+            pass
+        try:
+            reg2 = Third.objects.filter(session=session, subject=subject)[0]
+            reg4 = Third.objects.filter(session=session, subject=subject).order_by('-terms_total')
+            n = reg4.count()
+            d = round((reg2.subject_total/3*n),2)
+            subject_position = []
+            subject_pos = 0
+
+            for each in reg4:
+                each.subject_total = reg2.subject_total
+                each.subject_avg = d
+                each.grade = reg2.grade()
+                each.save()
+            for each in reg4:
+                subject_position.append(each.terms_total)
+
+            for i in range(len(subject_position)):
+                for each in reg4:
+                    temp = subject_position.index(each.terms_total)
+                    each.subject_pos = temp + 1
+                    each.save()
+        except:
+            pass
+        try:
+            reg6 = Third.objects.filter(session=session, student=student)
+            m = reg6.count()
+            all_total = Third.objects.filter(session=session, student=student).aggregate(Sum('total'))['total__sum']
+            cum_perc = round((all_total/m),2)
+            for each in reg6:
+                each.cumulative = all_total
+                each.cum_perc = cum_perc
+                each.static_class = str(each.student.classe)
+                each.save()
+            reg7 = Third.objects.filter(session=session, student=student)[0]
+            if value == 1:
+                reg7.value = 1
+                reg7.save()
+        except:
+            pass
+
+        return redirect('thirds')
+    return render(request, 'result/thirds_confirm_delete.html', {'first': first})
+
+@login_required
 def deleteAdminFirst(request, id):
     first = First.objects.get(id=id)
     obj = get_object_or_404(First, id=id)
