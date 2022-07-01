@@ -26,6 +26,7 @@ urlpatterns = [
     path('a---n/first-term/result/update/<int:id>', views.updateAdminFirst, name='admin_first_update'),
     path('staff/first-term/result/delete/<int:id>', views.deleteFirst),
     path('staff/second-term/result/delete/<int:id>', views.deleteSecond),
+    path('staff/third-term/result/delete/<int:id>', views.deleteThird),
     path('a---n/first-term/result/delete/<int:id>', views.deleteAdminFirst),
     path('staff/first-term/result/attitude-and-skills/<int:id>', views.updateFirstBeha, name='first_update_beha'),
     path('staff/second-term/result/attitude-and-skills/<int:id>', views.updateSecondBeha, name='second_update_beha'),

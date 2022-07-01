@@ -1531,7 +1531,6 @@ def deleteThird(request, id):
         try:
             reg1 = Third.objects.filter(session=session, subject=subject)[0]
             reg1.subject_total = reg1.subject_total - old_total
-            reg1.terms_total = reg1.terms_total - old_total
             reg1.save()
         except:
             pass
@@ -1539,7 +1538,7 @@ def deleteThird(request, id):
             reg2 = Third.objects.filter(session=session, subject=subject)[0]
             reg4 = Third.objects.filter(session=session, subject=subject).order_by('-terms_total')
             n = reg4.count()
-            d = round((reg2.subject_total/3*n),2)
+            d = round((reg2.subject_total/(3*n)),2)
             subject_position = []
             subject_pos = 0
 
