@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import First, Second, Third
 from users.models import Person
 from management.models import Class
-from .forms import FirstForm, SecondForm, ThirdForm, SecondFormPay,FirstFormUp, FirstFormBeha, FirstFormHead, SecondFormUp, ThirdFormUp, SecondFormBeha, ThirdFormBeha, SecondFormHead, FirstFormPay
+from .forms import FirstForm, SecondForm, ThirdForm, SecondFormPay,FirstFormUp, FirstFormBeha, FirstFormHead, SecondFormUp, ThirdFormUp, SecondFormBeha, ThirdFormBeha, SecondFormHead, ThirdFormHead, FirstFormPay
 from django.contrib import messages
 from django.core.paginator import Paginator
 from .filters import FirstFilter, FirstFilter2, SecondFilter2, ThirdFilter2, FirstFilterPay, SecondFilter, SecondFilterPay, ThirdFilter
@@ -223,6 +223,22 @@ def showSeconds3(request):
     total_firsts = filtered_firsts.qs.count()
     context['total_firsts'] = total_firsts
     return render(request, 'result/second_list3.html', context=context)
+
+@login_required
+def showThirds3(request):
+    context = {}
+    filtered_firsts = ThirdFilter2(
+        request.GET,
+        queryset = Third.objects.filter(student__classe__teacher=request.user, value=1)
+    )
+    context['filtered_firsts'] = filtered_firsts
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    page_number = request.GET.get('page')
+    firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
+    context['firsts_page_obj'] = firsts_page_obj
+    total_firsts = filtered_firsts.qs.count()
+    context['total_firsts'] = total_firsts
+    return render(request, 'result/third_list3.html', context=context)
 
 @login_required
 def showAdminFirsts3(request):
@@ -583,7 +599,7 @@ def updateThird(request, id):
                 reg6 = Third.objects.filter(session=session, student=student)
                 m = reg6.count()
                 all_total = Third.objects.filter(session=session, student=student).aggregate(Sum('terms_total'))['terms_total__sum']
-                cum_perc = round((all_total/m),2)
+                cum_perc = round((all_total/(3*m)),2)
                 for each in reg6:
                     each.cumulative = all_total
                     each.cum_perc = cum_perc
@@ -1321,7 +1337,7 @@ def addThird(request, id):
                     reg6 = Third.objects.filter(session=session, student=stud)
                     m = reg6.count()
                     all_total = Third.objects.filter(session=session, student=stud).aggregate(Sum('terms_total'))['terms_total__sum']
-                    cum_perc = round((all_total/m),2)
+                    cum_perc = round((all_total/(3*m)),2)
                     for each in reg6:
                         each.cumulative = all_total
                         each.cum_perc = cum_perc
@@ -1441,6 +1457,28 @@ def showReportCtSecond(request, pk, **kwargs):
     for each in firsts_student:
         response_first_student.append(each)
     return render(request, 'result/second_report_ct.html', {'firsts':response_first,
+    'firsts_student':response_first_student, 'first': first, 'obtainable':obtainable, 'grade_general':grade_general,
+    'teacher_comment':teacher_comment, 'head_comment':head_comment})
+
+@login_required
+def showReportCtThird(request, pk, **kwargs):
+    first = Third.objects.get(id=pk)
+    student = first.student
+    session = first.session
+    firsts = Third.objects.all()
+    firsts_student = Third.objects.filter(session=session, student=student).order_by('subject__serial')
+    obtainable = Third.objects.filter(session=session, student=student).count()
+    obtainable = 100 * obtainable
+    grade_general = first.grade_general
+    teacher_comment = first.teacher_comment
+    head_comment = first.head_comment
+    response_first = []
+    response_first_student = []
+    for each in firsts:
+        response_first.append(each)
+    for each in firsts_student:
+        response_first_student.append(each)
+    return render(request, 'result/third_report_ct.html', {'firsts':response_first,
     'firsts_student':response_first_student, 'first': first, 'obtainable':obtainable, 'grade_general':grade_general,
     'teacher_comment':teacher_comment, 'head_comment':head_comment})
 
@@ -1677,8 +1715,8 @@ def deleteThird(request, id):
         try:
             reg6 = Third.objects.filter(session=session, student=student)
             m = reg6.count()
-            all_total = Third.objects.filter(session=session, student=student).aggregate(Sum('total'))['total__sum']
-            cum_perc = round((all_total/m),2)
+            all_total = Third.objects.filter(session=session, student=student).aggregate(Sum('terms_total'))['terms_total__sum']
+            cum_perc = round((all_total/(3*m)),2)
             for each in reg6:
                 each.cumulative = all_total
                 each.cum_perc = cum_perc

@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 {% load home_tags %}
 {% block title %}
-  <title>{{first.student.first_name}} {{first.student.last_name}}'s First Term Report</title>
+  <title>{{first.student.first_name}} {{first.student.last_name}}'s Third Term Report</title>
   <style type="text/css">
   @media print {
       #printbtn {
@@ -14,7 +14,7 @@
 {% endblock title %}
 
 {% block content %}
-{% if first.student.classe.teacher == request.user %}
+{% if first.session.third_head == request.user %}
 <form class="text-center">
   <input id ="printbtn" type="button" class="btn btn-primary" value="Click to show print preview" onclick="window.print();" >
 </form> <br>
@@ -49,7 +49,7 @@
         <h6 class="text-black text-left"><strong>GENDER: <span class="text-primary">{{first.student.gender}}</span></strong></h6>
       </div>
       <div class="col-md-3">
-        <h6 class="text-black text-left"><strong>TERM: <span class="text-primary">FIRST</span></strong></h6>
+        <h6 class="text-black text-left"><strong>TERM: <span class="text-primary">Third</span></strong></h6>
         <h6 class="text-black text-left"><strong>SESSION: <span class="text-primary">{{first.session}}</span></strong></h6>
       </div>
       <div class="col-md-1">
@@ -73,13 +73,14 @@
               <tr>
                 <td class="text-center text-black"><strong>S/N</strong></td>
                 <td class="text-center text-black"><strong>SUBJECTS المواد</strong></td>
-                <td class="text-center text-black"><strong>1st CA الاختبار الأول<br>(20%) (%٢٠)</strong></td>
-                <td class="text-center text-black"><strong>2nd CA الاختبار الثاني<br>(20%) (%٢٠)</strong></td>
-                <td class="text-center text-black"><strong>EXAM الامتحان<br>(60%) (%٦٠)</strong></td>
-                <td class="text-center text-black"><strong>TOTAL<br>(100%)</strong></td>
-                <td class="text-center text-black"><strong>CLASS AVERAGE <br> ناصف الفصل</strong></td>
-                <td class="text-center text-black"><strong>SUBJECT POSITION <br> المرتبة في المادة</strong></td>
-                <td class="text-center text-black"><strong>GRADE</strong></td>
+                <td class="text-center text-black"><strong>CURRENT 1st CA الاختبار الأول<br>(20%) (%٢٠)</strong></td>
+                <td class="text-center text-black"><strong>CURRENT 2nd CA الاختبار الثاني<br>(20%) (%٢٠)</strong></td>
+                <td class="text-center text-black"><strong>CURRENT EXAM الامتحان<br>(60%) (%٦٠)</strong></td>
+                <td class="text-center text-black"><strong>THIRD TERM CUMULATIVE<br>(100%)</strong></td>
+                <td class="text-center text-black"><strong>OVERALL CUMULATIVE<br>(300%)</strong></td>
+                <td class="text-center text-black"><strong>OVERALL CLASS AVERAGE <br> ناصف الفصل</strong></td>
+                <td class="text-center text-black"><strong>OVERALL SUBJECT POSITION <br> المرتبة في المادة</strong></td>
+                <td class="text-center text-black"><strong>OVERALL GRADE</strong></td>
               </tr>
             </thead>
             <tbody>
@@ -91,6 +92,7 @@
                 <td class="text-primary text-center"><strong>{{first.ca2}}</strong></td>
                 <td class="text-primary text-center"><strong>{{first.exam}}</strong></td>
                 <td class="text-primary text-center"><strong>{{first.total}}</strong></td>
+                <td class="text-primary text-center"><strong>{{first.terms_total}}</strong></td>
                 <td class="text-primary text-center"><strong>{{first.subject_avg}}</strong></td>
                 <td class="text-primary text-center"><strong>{{first.subject_pos|my_suffix}}</strong></td>
                 <td class="text-primary text-center"><strong>{{first.grade}}</strong></td>
@@ -112,7 +114,7 @@
             <tbody>
               <tr class="table-light">
                 <td class="text-primary"><strong>No of Times School Opens</strong></td>
-                <td class="text-primary text-center"><strong>{{first.session.first_number}}</strong></td>
+                <td class="text-primary text-center"><strong>{{first.session.third_number}}</strong></td>
               </tr>
               <tr class="table-light">
                 <td class="text-primary"><strong>No of Days Present</strong></td>
@@ -251,7 +253,7 @@
             <table class="table table-sm table-bordered">
               <tr class="table-light">
                 <td  class="text-black text-center"><h6><strong>NEXT<br>TERM<br>BEGINS</strong></h6></td>
-                <td  class="text-primary text-center"><h6><strong><br>{{first.session.first_next}}</strong></h6></td>
+                <td  class="text-primary text-center"><h6><strong><br>{{first.session.third_next}}</strong></h6></td>
               </tr>
             </table>
           </div>
