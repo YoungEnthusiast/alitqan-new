@@ -64,6 +64,15 @@ class SecondFilter2(django_filters.FilterSet):
         model = Second
         fields = ['session']
 
+class ThirdFilter2(django_filters.FilterSet):
+    static_class = CharFilter(field_name='static_class', lookup_expr='icontains', label="Class")
+    admission_no = CharFilter(field_name='student__username', lookup_expr='icontains', label="Admission No")
+    first_name = CharFilter(field_name='student__first_name', lookup_expr='icontains', label="First Name")
+    last_name = CharFilter(field_name='student__last_name', lookup_expr='icontains', label="Last Name")
+    class Meta:
+        model = Third
+        fields = ['session']
+
 class FirstFilterPay(django_filters.FilterSet):
     static_class = CharFilter(field_name='static_class', lookup_expr='icontains', label="Class")
     admission_no = CharFilter(field_name='student__username', lookup_expr='icontains', label="Admission No")

@@ -17,7 +17,7 @@ class First(models.Model):
     TEACHER_CHOICES = [
         ('It is my pleasure being his class teacher for his dedication to studies is on the highest level.', '(Above 79%) - It is my pleasure being his class teacher for his dedication to studies is on the highest level.'),
         ('It is my pleasure being her class teacher for her dedication to studies is on the highest level.', '(Above 79%) - It is my pleasure being her class teacher for her dedication to studies is on the highest level.'),
-        ('It is my pleasure being your class teacher for your dedication to studies is on the highest level', '(Above 79%) - -	It is my pleasure being your class teacher for your dedication to studies is on the highest level'),
+        ('It is my pleasure being your class teacher for your dedication to studies is on the highest level', '(Above 79%) - It is my pleasure being your class teacher for your dedication to studies is on the highest level'),
         ('His dedication to studies is topnotch! No wonder he has excellent grades throughout.', '(Above 79%) - His dedication to studies is topnotch! No wonder he has excellent grades throughout.'),
         ('Her dedication to studies is topnotch! No wonder she has excellent grades throughout.', '(Above 79%) - Her dedication to studies is topnotch! No wonder she has excellent grades throughout.'),
         ('What a start to his new class! His performance this term is really outstanding!', '(Above 79%) - What a start to his new class! His performance this term is really outstanding!'),
@@ -175,7 +175,7 @@ class Second(models.Model):
     TEACHER_CHOICES = [
         ('It is my pleasure being his class teacher for his dedication to studies is on the highest level.', '(Above 79%) - It is my pleasure being his class teacher for his dedication to studies is on the highest level.'),
         ('It is my pleasure being her class teacher for her dedication to studies is on the highest level.', '(Above 79%) - It is my pleasure being her class teacher for her dedication to studies is on the highest level.'),
-        ('It is my pleasure being your class teacher for your dedication to studies is on the highest level', '(Above 79%) - -	It is my pleasure being your class teacher for your dedication to studies is on the highest level'),
+        ('It is my pleasure being your class teacher for your dedication to studies is on the highest level', '(Above 79%) - It is my pleasure being your class teacher for your dedication to studies is on the highest level'),
         ('His dedication to studies is topnotch! No wonder he has excellent grades throughout.', '(Above 79%) - His dedication to studies is topnotch! No wonder he has excellent grades throughout.'),
         ('Her dedication to studies is topnotch! No wonder she has excellent grades throughout.', '(Above 79%) - Her dedication to studies is topnotch! No wonder she has excellent grades throughout.'),
         ('What a start to his new class! His performance this term is really outstanding!', '(Above 79%) - What a start to his new class! His performance this term is really outstanding!'),
@@ -332,7 +332,7 @@ class Third(models.Model):
     TEACHER_CHOICES = [
         ('It is my pleasure being his class teacher for his dedication to studies is on the highest level.', '(Above 79%) - It is my pleasure being his class teacher for his dedication to studies is on the highest level.'),
         ('It is my pleasure being her class teacher for her dedication to studies is on the highest level.', '(Above 79%) - It is my pleasure being her class teacher for her dedication to studies is on the highest level.'),
-        ('It is my pleasure being your class teacher for your dedication to studies is on the highest level', '(Above 79%) - -	It is my pleasure being your class teacher for your dedication to studies is on the highest level'),
+        ('It is my pleasure being your class teacher for your dedication to studies is on the highest level', '(Above 79%) - It is my pleasure being your class teacher for your dedication to studies is on the highest level'),
         ('His dedication to studies is topnotch! No wonder he has excellent grades throughout.', '(Above 79%) - His dedication to studies is topnotch! No wonder he has excellent grades throughout.'),
         ('Her dedication to studies is topnotch! No wonder she has excellent grades throughout.', '(Above 79%) - Her dedication to studies is topnotch! No wonder she has excellent grades throughout.'),
         ('What a start to his new class! His performance this term is really outstanding!', '(Above 79%) - What a start to his new class! His performance this term is really outstanding!'),
@@ -391,6 +391,9 @@ class Third(models.Model):
         ('Her performance is not bad, but she needs to try harder. May she accomplish that with ease.', '(Below 50%) - Her performance is not bad, but she needs to try harder. May she accomplish that with ease.'),
         ('Your performance is not that poor as a fresher. But try to improve your performance next term.', '(Below 50%) - Your performance is not that poor as a fresher. But try to improve your performance next term.'),
         ('The adventure just begins; nothing to worry about. You will excel in sha Allah.', '(Below 50%) - The adventure just begins; nothing to worry about. You will excel in sha Allah.'),
+        ('To repeat the class!', 'To repeat the class!'),
+        ('Promoted to the next class on condition!', 'Promoted to the next class on condition!'),
+        ('Promoted to the next class!', 'Promoted to the next class!'),
     ]
     session = models.ForeignKey('management.Session', on_delete = models.SET_NULL, default=1, null=True)
     subject = models.ForeignKey('management.Subject', on_delete=models.SET_NULL, null=True, related_name='result_subject_third')

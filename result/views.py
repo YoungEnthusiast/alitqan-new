@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import First, Second, Third
 from users.models import Person
 from management.models import Class
-from .forms import FirstForm, SecondForm, ThirdForm, SecondFormPay,FirstFormUp, FirstFormBeha, FirstFormHead, SecondFormUp, ThirdFormUp, SecondFormBeha, SecondFormHead, FirstFormPay
+from .forms import FirstForm, SecondForm, ThirdForm, SecondFormPay,FirstFormUp, FirstFormBeha, FirstFormHead, SecondFormUp, ThirdFormUp, SecondFormBeha, ThirdFormBeha, SecondFormHead, FirstFormPay
 from django.contrib import messages
 from django.core.paginator import Paginator
-from .filters import FirstFilter, FirstFilter2, SecondFilter2, FirstFilterPay, SecondFilter, SecondFilterPay, ThirdFilter
+from .filters import FirstFilter, FirstFilter2, SecondFilter2, ThirdFilter2, FirstFilterPay, SecondFilter, SecondFilterPay, ThirdFilter
 from django.contrib.auth.decorators import login_required#, permission_required
 from django.core.mail import send_mail
 from django.db.models import Sum
@@ -99,7 +99,7 @@ def showFirsts2(request, ):
 @login_required
 def showSeconds2(request, ):
     context = {}
-    filtered_firsts = FirstFilter2(
+    filtered_firsts = SecondFilter2(
         request.GET,
         queryset = Second.objects.filter(student__classe__teacher=request.user, value=1)
     )
@@ -111,6 +111,22 @@ def showSeconds2(request, ):
     total_firsts = filtered_firsts.qs.count()
     context['total_firsts'] = total_firsts
     return render(request, 'result/second_list2.html', context=context)
+
+@login_required
+def showThirds2(request, ):
+    context = {}
+    filtered_firsts = ThirdFilter2(
+        request.GET,
+        queryset = Third.objects.filter(student__classe__teacher=request.user, value=1)
+    )
+    context['filtered_firsts'] = filtered_firsts
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    page_number = request.GET.get('page')
+    firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
+    context['firsts_page_obj'] = firsts_page_obj
+    total_firsts = filtered_firsts.qs.count()
+    context['total_firsts'] = total_firsts
+    return render(request, 'result/third_list2.html', context=context)
 
 @login_required
 def showAdminFirsts2(request, ):
@@ -159,6 +175,22 @@ def showHeadSeconds2(request):
     total_firsts = filtered_firsts.qs.count()
     context['total_firsts'] = total_firsts
     return render(request, 'result/head_second_list2.html', context=context)
+
+@login_required
+def showHeadThirds2(request):
+    context = {}
+    filtered_firsts = ThirdFilter2(
+        request.GET,
+        queryset = Third.objects.filter(session__second_head=request.user, value=1)
+    )
+    context['filtered_firsts'] = filtered_firsts
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
+    page_number = request.GET.get('page')
+    firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
+    context['firsts_page_obj'] = firsts_page_obj
+    total_firsts = filtered_firsts.qs.count()
+    context['total_firsts'] = total_firsts
+    return render(request, 'result/head_third_list2.html', context=context)
 
 @login_required
 def showFirsts3(request):
@@ -758,6 +790,52 @@ def updateSecondBeha(request, id):
     return render(request, 'result/second_update_beha.html', {'form': form, 'first': first})
 
 @login_required
+def updateThirdBeha(request, id):
+    first = Third.objects.get(id=id)
+    form = ThirdFormBeha(instance=first)
+    if request.method=='POST':
+        form = ThirdFormBeha(request.POST, instance=first)
+        if form.is_valid():
+            form.save()
+            session = form.cleaned_data.get('session')
+            student = form.cleaned_data.get('student')
+            reg = Third.objects.get(id=id)
+            if reg.student.classe.teacher != request.user:
+                messages.error(request, "Only the class teacher of " + str(reg.student.classe) + " fill skills/attitudes for a student in the class.")
+            else:
+                reg.student = student
+                teacher = request.user
+                teacher_name = teacher.last_name
+                student_first_name = student.first_name
+                student_last_name = student.last_name
+                student_email = student.email
+                reg.save()
+                reg1 = Third.objects.filter(session=session, student=student)
+                for each in reg1:
+                    each.number_present = reg.number_present
+                    each.concentration = reg.concentration
+                    each.responsiveness = reg.responsiveness
+                    each.comprehension = reg.comprehension
+                    each.interest = reg.interest
+                    each.homework = reg.homework
+                    each.reading = reg.reading
+                    each.writing = reg.writing
+                    each.spoken = reg.spoken
+                    each.innovative = reg.innovative
+                    each.save()
+            # send_mail(
+            #     '[' + str(session) + '] SCORES UPDATE',
+            #     "New Scores have been recorded. Teacher's Name: " + str(teacher_name) + "student: " + str(student) + "student's Name: " + str(student_first_name) + str(student_last_name),
+            #     'yustaoab@gmail.com',
+            #     [student_email],
+            #     fail_silently=False,
+            #     #html_message = render_to_string('treatment/doc_lab_email.html', {'appointment_Id': str(appointment_Id), 'patient_id': str(patient_id), 'doctor_name': str(doctor_name), 'lab_technician_name': str(lab_technician_name), 'appointment_Id': str(appointment_Id)})
+            # )
+            messages.success(request, str(student_first_name) + "'s attitude to study and scholastic skills have been recorded successfully")
+            return redirect('thirds2')
+    return render(request, 'result/third_update_beha.html', {'form': form, 'first': first})
+
+@login_required
 def updateFirstHead(request, id):
     first = First.objects.get(id=id)
     form = FirstFormHead(instance=first)
@@ -834,6 +912,45 @@ def updateSecondHead(request, id):
                 messages.success(request, str(student_first_name) + "'s comment has been recorded successfully")
                 return redirect('head_seconds2')
     return render(request, 'result/second_update_head.html', {'form': form, 'first': first})
+
+@login_required
+def updateThirdHead(request, id):
+    first = Third.objects.get(id=id)
+    form = ThirdFormHead(instance=first)
+    if request.method=='POST':
+        form = ThirdFormHead(request.POST, instance=first)
+        if form.is_valid():
+            form.save()
+            session = form.cleaned_data.get('session')
+            student = form.cleaned_data.get('student')
+            reg = Third.objects.get(id=id)
+            if reg.session.third_head != request.user:
+                messages.error(request, "Only the head of schools can enter the comment.")
+            else:
+                reg.student = student
+                teacher = request.user
+                teacher_name = teacher.last_name
+                student_first_name = student.first_name
+                student_last_name = student.last_name
+                student_email = student.email
+                reg.save()
+                reg1 = Third.objects.filter(session=session, student=student)
+                for each in reg1:
+                    each.number_present = reg.number_present
+                    # each.static_number = str(reg.session.first_number)
+                    # each.absent = int(each.static_number) - each.number_present
+                    each.save()
+            # send_mail(
+            #     '[' + str(session) + '] SCORES UPDATE',
+            #     "New Scores have been recorded. Teacher's Name: " + str(teacher_name) + "student: " + str(student) + "student's Name: " + str(student_first_name) + str(student_last_name),
+            #     'yustaoab@gmail.com',
+            #     [student_email],
+            #     fail_silently=False,
+            #     #html_message = render_to_string('treatment/doc_lab_email.html', {'appointment_Id': str(appointment_Id), 'patient_id': str(patient_id), 'doctor_name': str(doctor_name), 'lab_technician_name': str(lab_technician_name), 'appointment_Id': str(appointment_Id)})
+            # )
+                messages.success(request, str(student_first_name) + "'s comment has been recorded successfully")
+                return redirect('head_thirds2')
+    return render(request, 'result/third_update_head.html', {'form': form, 'first': first})
 
 @login_required
 def updateAdminFirstBeha(request, id):
