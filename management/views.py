@@ -15,7 +15,7 @@ def showSessionsFirst(request):
         queryset = Session.objects.all()
     )
     context['filtered_sessions'] = filtered_sessions
-    paginated_filtered_sessions = Paginator(filtered_sessions.qs, 10)
+    paginated_filtered_sessions = Paginator(filtered_sessions.qs, 500)
     page_number = request.GET.get('page')
     sessions_page_obj = paginated_filtered_sessions.get_page(page_number)
     context['sessions_page_obj'] = sessions_page_obj
@@ -31,7 +31,7 @@ def showClassesFirst(request):
         queryset = Class.objects.all()
     )
     context['filtered_classes'] = filtered_classes
-    paginated_filtered_classes = Paginator(filtered_classes.qs, 10)
+    paginated_filtered_classes = Paginator(filtered_classes.qs, 500)
     page_number = request.GET.get('page')
     classes_page_obj = paginated_filtered_classes.get_page(page_number)
     context['classes_page_obj'] = classes_page_obj
@@ -47,7 +47,7 @@ def showSubjectsFirst(request):
         queryset = Subject.objects.all()
     )
     context['filtered_subjects'] = filtered_subjects
-    paginated_filtered_subjects = Paginator(filtered_subjects.qs, 10)
+    paginated_filtered_subjects = Paginator(filtered_subjects.qs, 500)
     page_number = request.GET.get('page')
     subjects_page_obj = paginated_filtered_subjects.get_page(page_number)
     context['subjects_page_obj'] = subjects_page_obj

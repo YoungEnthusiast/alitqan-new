@@ -15,7 +15,7 @@
 <a href="{% url 'thirds' %}"><i class="fas fa-signal fa-1x"></i> Scores</a>
 <a href="{% url 'thirds2' %}"><i class="fas fa-puzzle-piece fa-1x"></i> Attitude/Skills</a>
 <a href="{% url 'head_thirds2' %}"><strong class="text-warning"><i class="fas fa-certificate fa-1x"></i> Head's Comment</strong></a>
-<a href="{% url 'seconds3' %}"><i class="fas fa-print fa-1x"></i> Report Sheets</a>
+<a href="{% url 'thirds3' %}"><i class="fas fa-print fa-1x"></i> Report Sheets</a>
 
 </div>
   <section class="main">
@@ -69,7 +69,7 @@
                   <td><strong><a href="">{{first.student.username}} | {{first.student.first_name}} {{first.student.last_name}}</a></strong></td>
                   <td>{{first.static_class}}</td>
                   <td>{{first.updated|timesince}}</td>
-                  <td class="text-center"><a href="{% url 'show_report_head_second' first.id %}"><button type="button" class="btn btn-sm btn-primary text-white"><strong><i class="fa fa-eye fa-1x text-white"></i> &nbspView Report</strong></button></a></td>
+                  <td class="text-center"><a href="{% url 'show_report_head_third' first.id %}"><button type="button" class="btn btn-sm btn-primary text-white"><strong><i class="fa fa-eye fa-1x text-white"></i> &nbspView Report</strong></button></a></td>
                   <td class="text-center"><a href="head-comment/{{first.id}}"><button type="button" class="btn btn-sm btn-primary text-white"><strong><i class="fa fa-pen fa-1x text-white"></i> &nbspSelect Comment</strong></button></a></td>
                 </tr>
               {% endfor %}

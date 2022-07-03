@@ -73,6 +73,47 @@ class ThirdFilter2(django_filters.FilterSet):
         model = Third
         fields = ['session']
 
+class FirstFilter3(django_filters.FilterSet):
+    static_class = CharFilter(field_name='static_class', lookup_expr='icontains', label="Class")
+    subject = CharFilter(field_name='subject__subject', lookup_expr='icontains', label="Subject")
+
+    class Meta:
+        model = First
+        fields = ['session']
+
+class SecondFilter3(django_filters.FilterSet):
+    static_class = CharFilter(field_name='static_class', lookup_expr='icontains', label="Class")
+    subject = CharFilter(field_name='subject__subject', lookup_expr='icontains', label="Subject")
+    class Meta:
+        model = Second
+        fields = ['session']
+
+class ThirdFilter3(django_filters.FilterSet):
+    static_class = CharFilter(field_name='static_class', lookup_expr='icontains', label="Class")
+    subject = CharFilter(field_name='subject__subject', lookup_expr='icontains', label="Subject")
+    class Meta:
+        model = Third
+        fields = ['session']
+
+class FirstFilter4(django_filters.FilterSet):
+    static_class = CharFilter(field_name='static_class', lookup_expr='icontains', label="Class")
+
+    class Meta:
+        model = First
+        fields = ['session']
+
+class SecondFilter4(django_filters.FilterSet):
+    static_class = CharFilter(field_name='static_class', lookup_expr='icontains', label="Class")
+    class Meta:
+        model = Second
+        fields = ['session']
+
+class ThirdFilter4(django_filters.FilterSet):
+    static_class = CharFilter(field_name='static_class', lookup_expr='icontains', label="Class")
+    class Meta:
+        model = Third
+        fields = ['session']
+
 class FirstFilterPay(django_filters.FilterSet):
     static_class = CharFilter(field_name='static_class', lookup_expr='icontains', label="Class")
     admission_no = CharFilter(field_name='student__username', lookup_expr='icontains', label="Admission No")
@@ -93,4 +134,13 @@ class SecondFilterPay(django_filters.FilterSet):
     last_name = CharFilter(field_name='student__last_name', lookup_expr='icontains', label="Last Name")
     class Meta:
         model = Second
+        fields = ['session']
+
+class ThirdFilterPay(django_filters.FilterSet):
+    static_class = CharFilter(field_name='static_class', lookup_expr='icontains', label="Class")
+    admission_no = CharFilter(field_name='student__username', lookup_expr='icontains', label="Admission No")
+    first_name = CharFilter(field_name='student__first_name', lookup_expr='icontains', label="First Name")
+    last_name = CharFilter(field_name='student__last_name', lookup_expr='icontains', label="Last Name")
+    class Meta:
+        model = Third
         fields = ['session']

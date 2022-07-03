@@ -175,7 +175,7 @@ def showStudentsFirst(request):
         queryset = Person.objects.filter(role="Student", classe__teacher=request.user)
     )
     context['filtered_students'] = filtered_students
-    paginated_filtered_students = Paginator(filtered_students.qs, 10)
+    paginated_filtered_students = Paginator(filtered_students.qs, 500)
     page_number = request.GET.get('page')
     students_page_obj = paginated_filtered_students.get_page(page_number)
     context['students_page_obj'] = students_page_obj
@@ -191,7 +191,7 @@ def showStudentsSecond(request):
         queryset = Person.objects.filter(role="Student", classe__teacher=request.user)
     )
     context['filtered_students'] = filtered_students
-    paginated_filtered_students = Paginator(filtered_students.qs, 10)
+    paginated_filtered_students = Paginator(filtered_students.qs, 500)
     page_number = request.GET.get('page')
     students_page_obj = paginated_filtered_students.get_page(page_number)
     context['students_page_obj'] = students_page_obj
@@ -207,7 +207,7 @@ def showStudentsThird(request):
         queryset = Person.objects.filter(role="Student", classe__teacher=request.user)
     )
     context['filtered_students'] = filtered_students
-    paginated_filtered_students = Paginator(filtered_students.qs, 10)
+    paginated_filtered_students = Paginator(filtered_students.qs, 500)
     page_number = request.GET.get('page')
     students_page_obj = paginated_filtered_students.get_page(page_number)
     context['students_page_obj'] = students_page_obj
@@ -222,7 +222,7 @@ def showStudentsFirst2(request):
         queryset = Person.objects.filter(role="Student")
     )
     context['filtered_students'] = filtered_students
-    paginated_filtered_students = Paginator(filtered_students.qs, 10)
+    paginated_filtered_students = Paginator(filtered_students.qs, 500)
     page_number = request.GET.get('page')
     students_page_obj = paginated_filtered_students.get_page(page_number)
     context['students_page_obj'] = students_page_obj
@@ -249,7 +249,7 @@ def showStaffsFirst(request):
         queryset = Person.objects.filter(role="Staff")
     )
     context['filtered_staffs'] = filtered_staffs
-    paginated_filtered_staffs = Paginator(filtered_staffs.qs, 10)
+    paginated_filtered_staffs = Paginator(filtered_staffs.qs, 500)
     page_number = request.GET.get('page')
     staffs_page_obj = paginated_filtered_staffs.get_page(page_number)
     context['staffs_page_obj'] = staffs_page_obj

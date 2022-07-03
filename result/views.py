@@ -2,10 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import First, Second, Third
 from users.models import Person
 from management.models import Class
-from .forms import FirstForm, SecondForm, ThirdForm, SecondFormPay,FirstFormUp, FirstFormBeha, FirstFormHead, SecondFormUp, ThirdFormUp, SecondFormBeha, ThirdFormBeha, SecondFormHead, ThirdFormHead, FirstFormPay
+from .forms import FirstForm, SecondForm, ThirdForm, ThirdFormPay, SecondFormPay,FirstFormUp, FirstFormBeha, FirstFormHead, SecondFormUp, ThirdFormUp, SecondFormBeha, ThirdFormBeha, SecondFormHead, ThirdFormHead, FirstFormPay
 from django.contrib import messages
 from django.core.paginator import Paginator
-from .filters import FirstFilter, FirstFilter2, SecondFilter2, ThirdFilter2, FirstFilterPay, SecondFilter, SecondFilterPay, ThirdFilter
+from .filters import FirstFilter, FirstFilter2, SecondFilter2, ThirdFilter2, ThirdFilter3, ThirdFilter4, FirstFilterPay, SecondFilter, SecondFilterPay, ThirdFilterPay, ThirdFilter
 from django.contrib.auth.decorators import login_required#, permission_required
 from django.core.mail import send_mail
 from django.db.models import Sum
@@ -24,7 +24,7 @@ def showFirsts(request):
         queryset = First.objects.filter(subject__teacher=request.user)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -40,7 +40,7 @@ def showSeconds(request):
         queryset = Second.objects.filter(subject__teacher=request.user)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -56,7 +56,7 @@ def showThirds(request):
         queryset = Third.objects.filter(subject__teacher=request.user)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -72,7 +72,7 @@ def showAdminFirsts(request):
         queryset = First.objects.all()
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -88,7 +88,7 @@ def showFirsts2(request, ):
         queryset = First.objects.filter(student__classe__teacher=request.user, value=1)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -104,7 +104,7 @@ def showSeconds2(request, ):
         queryset = Second.objects.filter(student__classe__teacher=request.user, value=1)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -120,7 +120,7 @@ def showThirds2(request, ):
         queryset = Third.objects.filter(student__classe__teacher=request.user, value=1)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -200,7 +200,7 @@ def showFirsts3(request):
         queryset = First.objects.filter(student__classe__teacher=request.user, value=1)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -216,7 +216,7 @@ def showSeconds3(request):
         queryset = Second.objects.filter(student__classe__teacher=request.user, value=1)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -232,7 +232,7 @@ def showThirds3(request):
         queryset = Third.objects.filter(student__classe__teacher=request.user, value=1)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -259,12 +259,12 @@ def showAdminFirsts3(request):
 @login_required
 def showFirstsUser(request):
     context = {}
-    filtered_firsts = FirstFilter(
+    filtered_firsts = FirstFilter3(
         request.GET,
         queryset = First.objects.filter(student=request.user, school_fees=True)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -275,12 +275,12 @@ def showFirstsUser(request):
 @login_required
 def showSecondsUser(request):
     context = {}
-    filtered_firsts = SecondFilter(
+    filtered_firsts = SecondFilter3(
         request.GET,
         queryset = Second.objects.filter(student=request.user, school_fees=True)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -289,14 +289,30 @@ def showSecondsUser(request):
     return render(request, 'result/second_list_user.html', context=context)
 
 @login_required
+def showThirdsUser(request):
+    context = {}
+    filtered_firsts = ThirdFilter3(
+        request.GET,
+        queryset = Third.objects.filter(student=request.user, school_fees=True)
+    )
+    context['filtered_firsts'] = filtered_firsts
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
+    page_number = request.GET.get('page')
+    firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
+    context['firsts_page_obj'] = firsts_page_obj
+    total_firsts = filtered_firsts.qs.count()
+    context['total_firsts'] = total_firsts
+    return render(request, 'result/third_list_user.html', context=context)
+
+@login_required
 def showFirsts3User(request):
     context = {}
-    filtered_firsts = FirstFilter(
+    filtered_firsts = FirstFilter4(
         request.GET,
         queryset = First.objects.filter(session__first_report=True, student=request.user, value=1, school_fees=True)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -307,18 +323,34 @@ def showFirsts3User(request):
 @login_required
 def showSeconds3User(request):
     context = {}
-    filtered_firsts = SecondFilter(
+    filtered_firsts = SecondFilter4(
         request.GET,
         queryset = Second.objects.filter(session__first_report=True, student=request.user, value=1, school_fees=True)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
     total_firsts = filtered_firsts.qs.count()
     context['total_firsts'] = total_firsts
     return render(request, 'result/second_list3_user.html', context=context)
+
+@login_required
+def showThirds3User(request):
+    context = {}
+    filtered_firsts = ThirdFilter4(
+        request.GET,
+        queryset = Third.objects.filter(session__first_report=True, student=request.user, value=1, school_fees=True)
+    )
+    context['filtered_firsts'] = filtered_firsts
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
+    page_number = request.GET.get('page')
+    firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
+    context['firsts_page_obj'] = firsts_page_obj
+    total_firsts = filtered_firsts.qs.count()
+    context['total_firsts'] = total_firsts
+    return render(request, 'result/third_list3_user.html', context=context)
 
 @login_required
 def updateFirst(request, id):
@@ -1418,6 +1450,29 @@ def showReportUserSecond(request, pk, **kwargs):
     'teacher_comment':teacher_comment, 'head_comment':head_comment})
 
 @login_required
+def showReportUserThird(request, pk, **kwargs):
+    first = Third.objects.get(id=pk)
+    student = first.student
+    session = first.session
+    firsts = Third.objects.all()
+    firsts_student = Third.objects.filter(session=session, student=student).order_by('subject__serial')
+    obtainable = Third.objects.filter(session=session, student=student).count()
+    obtainable = 100 * obtainable
+    grade_general = first.grade_general
+    teacher_comment = first.teacher_comment
+    head_comment = first.head_comment
+    response_first = []
+    response_first_student = []
+
+    for each in firsts:
+        response_first.append(each)
+    for each in firsts_student:
+        response_first_student.append(each)
+    return render(request, 'result/third_report_user.html', {'firsts':response_first,
+    'firsts_student':response_first_student, 'first': first, 'obtainable':obtainable, 'grade_general':grade_general,
+    'teacher_comment':teacher_comment, 'head_comment':head_comment})
+
+@login_required
 def showReportCt(request, pk, **kwargs):
     first = First.objects.get(id=pk)
     student = first.student
@@ -1523,6 +1578,27 @@ def showReportHeadSecond(request, pk, **kwargs):
     for each in firsts_student:
         response_first_student.append(each)
     return render(request, 'result/second_report_head.html', {'firsts':response_first, 'firsts_student':response_first_student, 'first': first, 'obtainable':obtainable, 'grade_general':grade_general,
+    'teacher_comment':teacher_comment, 'head_comment':head_comment})
+
+@login_required
+def showReportHeadThird(request, pk, **kwargs):
+    first = Third.objects.get(id=pk)
+    student = first.student
+    session = first.session
+    firsts = Third.objects.all()
+    firsts_student = Third.objects.filter(session=session, student=student).order_by('subject__serial')
+    obtainable = Third.objects.filter(session=session, student=student).count()
+    obtainable = 100 * obtainable
+    grade_general = first.grade_general
+    teacher_comment = first.teacher_comment
+    head_comment = first.head_comment
+    response_first = []
+    response_first_student = []
+    for each in firsts:
+        response_first.append(each)
+    for each in firsts_student:
+        response_first_student.append(each)
+    return render(request, 'result/third_report_head.html', {'firsts':response_first, 'firsts_student':response_first_student, 'first': first, 'obtainable':obtainable, 'grade_general':grade_general,
     'teacher_comment':teacher_comment, 'head_comment':head_comment})
 
 @login_required
@@ -1801,7 +1877,7 @@ def showFirstsPay(request):
         queryset = First.objects.filter(value=1)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
@@ -1817,13 +1893,29 @@ def showSecondsPay(request):
         queryset = Second.objects.filter(value=1)
     )
     context['filtered_firsts'] = filtered_firsts
-    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 10)
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
     page_number = request.GET.get('page')
     firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
     context['firsts_page_obj'] = firsts_page_obj
     total_firsts = filtered_firsts.qs.count()
     context['total_firsts'] = total_firsts
     return render(request, 'result/second_pay.html', context=context)
+
+@login_required
+def showThirdsPay(request):
+    context = {}
+    filtered_firsts = ThirdFilterPay(
+        request.GET,
+        queryset = Third.objects.filter(value=1)
+    )
+    context['filtered_firsts'] = filtered_firsts
+    paginated_filtered_firsts = Paginator(filtered_firsts.qs, 500)
+    page_number = request.GET.get('page')
+    firsts_page_obj = paginated_filtered_firsts.get_page(page_number)
+    context['firsts_page_obj'] = firsts_page_obj
+    total_firsts = filtered_firsts.qs.count()
+    context['total_firsts'] = total_firsts
+    return render(request, 'result/third_pay.html', context=context)
 
 def updateFirstPay(request, id):
     first = First.objects.get(id=id)
@@ -1872,6 +1964,30 @@ def updateSecondPay(request, id):
             messages.success(request, "The student's payment has been modified successfully")
             return redirect('seconds_pay')
     return render(request, 'result/payment_update_second.html', {'form': form, 'first':first})
+
+def updateThirdPay(request, id):
+    first = Third.objects.get(id=id)
+    form = ThirdFormPay(instance=first)
+    if request.method=='POST':
+        form = ThirdFormPay(request.POST, instance=first)
+        if form.is_valid():
+            form.save()
+            session = form.cleaned_data.get('session')
+            student = form.cleaned_data.get('student')
+            reg = Third.objects.get(id=id)
+            reg.student = student
+            student_first_name = student.first_name
+            student_last_name = student.last_name
+            student_email = student.email
+            reg.save()
+            reg1 = Third.objects.filter(session=session, student=student)
+            for each in reg1:
+                each.school_fees = reg.school_fees
+                each.save()
+
+            messages.success(request, "The student's payment has been modified successfully")
+            return redirect('thirds_pay')
+    return render(request, 'result/payment_update_third.html', {'form': form, 'first':first})
 
 def exportCSVSecondScores(request):
     seconds = Second.objects.all().order_by('-subject__classe')

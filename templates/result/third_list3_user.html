@@ -1,27 +1,24 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  <title>Third Term Score Sheet</title>
+  <title>Third Term Reports</title>
 {% endblock title %}
 
 {% block content %}
 {% load home_tags %}
 <br>
 <div class="sidebar">
-<a href="{% url 'staff_board_third' %}"><i class="fas fa-tachometer-alt fa-1x"></i> Dashboard</a>
-<a href="{% url 'profile_staff_third' %}"><i class="fas fa-user-tie fa-1x"></i> Profile</a>
-<a href="{% url 'staff_students_third' %}"><i class="fas fa-users fa-1x"></i> Students</a>
-<a href="{% url 'thirds' %}"><strong class="text-warning"><i class="fas fa-signal fa-1x"></i> Scores</strong></a>
-<a href="{% url 'thirds2' %}"><i class="fas fa-puzzle-piece fa-1x"></i> Attitude/Skills</a>
-<a href="{% url 'head_thirds2' %}"><i class="fas fa-certificate fa-1x"></i> Head's Comment</a>
-<a href="{% url 'thirds3' %}"><i class="fas fa-print fa-1x"></i> Report Sheets</a>
+<a href="{% url 'student_board_third' %}"><i class="fas fa-tachometer-alt fa-1x"></i> Dashboard</a>
+<a href="{% url 'profile_student_third' %}"><i class="fas fa-user-circle fa-1x"></i> Profile</a>
+<a href="{% url 'thirds_user' %}"><i class="fas fa-receipt fa-1x"></i> Scores' Progress</a>
+<a href="{% url 'thirds3_user' %}"><strong class="text-warning"><i class="fas fa-print fa-1x"></i> Report Sheets</strong></a>
 
 </div>
   <section class="main">
     {% include 'partials/_alerts.html' %}
 
     {% if firsts_page_obj %}
-    <h4 class="text-center text-warning">Search by One or Many Fields</h4>
+    <h4 class="text-center text-warning">Search first by One or Many Fields</h4>
     <div class="col-md-12">
       <div class="box-element bg-warning" id="form-wrapper">
         <form method="get" class="form-inline text-white">
@@ -40,11 +37,11 @@
         <div class="col-md-12">
           {% if total_firsts > 1 %}
           <div class="form-group col-md-12">
-            <h3 class="form-group text-warning">Total Rows: {{total_firsts}}</h3>
+            <h3 class="form-group text-warning">Total Sessions: {{total_firsts}}</h3>
           </div>
           {% else %}
           <div class="form-group col-md-12">
-            <h3 class="form-group text-warning">Total Row: {{total_firsts}}</h3>
+            <h3 class="form-group text-warning">Total Session: {{total_firsts}}</h3>
           </div>
           {% endif %}
           <div class="table-responsive">
@@ -54,30 +51,20 @@
                   <th>DATE FIRST RECORDED</th>
                   <th>SESSION & TERM</th>
                   <th>NO & NAME</th>
-                  <th>CLASS & SUBJECT</th>
-                  <th>1st CA</th>
-                  <th>2nd CA</th>
-                  <th>EXAM</th>
-                  <th>TOTAL</th>
+                  <th>CLASS</th>
                   <th>LAST UPDATED</th>
-                  <th></th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
               {% for first in firsts_page_obj %}
                 <tr class="table-success">
-                  <td>{{first.created|timesince}} ago</td>
+                  <td>{{first.created|timesince}}ago</td>
                   <td><strong>{{first.session}} | Third Term</strong></td>
                   <td><strong><a href="">{{first.student.username}} | {{first.student.first_name}} {{first.student.last_name}}</a></strong></td>
-                  <th>{{first.subject}}</th>
-                  <th>{{first.ca1}}</th>
-                  <th>{{first.ca2}}</th>
-                  <th>{{first.exam}}</th>
-                  <th>{{first.total}}</th>
+                  <td>{{first.static_class}}</td>
                   <td>{{first.updated|timesince}} ago</td>
-                  <td class="text-center"><a href="result/update/{{first.id}}"><button type="button" class="btn btn-sm btn-primary text-warning"><strong><i class="fa fa-edit fa-1x text-white"></i> &nbspModify</strong></button></a></td>
-                  <td class="text-center"><a href="result/delete/{{first.id}}"><button type="button" class="btn btn-sm btn-danger text-white"><strong><i class="fa fa-trash fa-1x text-white"></i> &nbspDelete</strong></button></a></td>
+                  <td class="text-center"><a href="{% url 'show_report_user_third' first.id %}"><button type="button" class="btn btn-sm btn-primary text-warning"><strong><i class="fa fa-print fa-1x text-white"></i> &nbspPrint Report</strong></button></a></td>
                 </tr>
               {% endfor %}
               </tbody>

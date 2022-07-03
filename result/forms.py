@@ -662,3 +662,38 @@ class SecondFormPay(forms.ModelForm):
     class Meta:
         model = Second
         fields = ['session', 'student', 'school_fees']
+
+class ThirdFormPay(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ThirdFormPay, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.id:
+            self.fields['session'].required = False
+            self.fields['session'].widget.attrs['disabled'] = 'disabled'
+            self.fields['student'].required = False
+            self.fields['student'].widget.attrs['disabled'] = 'disabled'
+
+    def clean_session(self):
+        instance = getattr(self, 'instance', None)
+        if instance:
+            return instance.session
+        else:
+            return self.cleaned_data.get('session', None)
+
+    def clean_subject(self):
+        instance = getattr(self, 'instance', None)
+        if instance:
+            return instance.subject
+        else:
+            return self.cleaned_data.get('subject', None)
+
+    def clean_student(self):
+        instance = getattr(self, 'instance', None)
+        if instance:
+            return instance.student
+        else:
+            return self.cleaned_data.get('student', None)
+
+    class Meta:
+        model = Third
+        fields = ['session', 'student', 'school_fees']

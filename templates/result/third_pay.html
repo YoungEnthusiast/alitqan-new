@@ -1,20 +1,19 @@
 {% extends 'base.html' %}
 
 {% block title %}
-  <title>Third Term Score Sheet</title>
+  <title>Third Term Payment</title>
 {% endblock title %}
 
 {% block content %}
 {% load home_tags %}
 <br>
 <div class="sidebar">
-<a href="{% url 'staff_board_third' %}"><i class="fas fa-tachometer-alt fa-1x"></i> Dashboard</a>
-<a href="{% url 'profile_staff_third' %}"><i class="fas fa-user-tie fa-1x"></i> Profile</a>
-<a href="{% url 'staff_students_third' %}"><i class="fas fa-users fa-1x"></i> Students</a>
-<a href="{% url 'thirds' %}"><strong class="text-warning"><i class="fas fa-signal fa-1x"></i> Scores</strong></a>
-<a href="{% url 'thirds2' %}"><i class="fas fa-puzzle-piece fa-1x"></i> Attitude/Skills</a>
-<a href="{% url 'head_thirds2' %}"><i class="fas fa-certificate fa-1x"></i> Head's Comment</a>
-<a href="{% url 'thirds3' %}"><i class="fas fa-print fa-1x"></i> Report Sheets</a>
+<a href="{% url 'admin_board_third' %}"><i class="fas fa-tachometer-alt fa-1x"></i> Dashboard</a>
+<!--
+<a href="{% url 'admin_firsts' %}"><i class="fas fa-signal fa-1x"></i> Scores</a>
+<a href="{% url 'admin_firsts2' %}"><i class="fas fa-puzzle-piece fa-1x"></i> Attitude/Skills</a>
+<a href="{% url 'admin_firsts3' %}"><i class="fas fa-print fa-1x"></i> Reports</a> -->
+<a href="{% url 'thirds_pay' %}"><strong class="text-warning"><i class="fas fa-money-bill-alt fa-1x"></i> Payment</strong></a>
 
 </div>
   <section class="main">
@@ -28,7 +27,7 @@
           {% for field in filtered_firsts.form %}
             <strong>{{field.label}}:</strong>&nbsp{{field}}&nbsp&nbsp
           {% endfor %}
-          <input type="submit" class="btn btn-dark" value="Sort">
+          <input type="submit" class="btn btn-primary" value="Sort">
         </form>
       </div>
     </div>
@@ -40,45 +39,49 @@
         <div class="col-md-12">
           {% if total_firsts > 1 %}
           <div class="form-group col-md-12">
-            <h3 class="form-group text-warning">Total Rows: {{total_firsts}}</h3>
+            <h3 class="form-group text-warning">Total Students: {{total_firsts}}</h3>
           </div>
           {% else %}
           <div class="form-group col-md-12">
-            <h3 class="form-group text-warning">Total Row: {{total_firsts}}</h3>
+            <h3 class="form-group text-warning">Total Student: {{total_firsts}}</h3>
           </div>
           {% endif %}
           <div class="table-responsive">
             <table class="table table-bordered">
               <thead class="thead-primary">
                 <tr>
-                  <th>DATE FIRST RECORDED</th>
+                  <th>DATE REGISTERED</th>
                   <th>SESSION & TERM</th>
-                  <th>NO & NAME</th>
-                  <th>CLASS & SUBJECT</th>
-                  <th>1st CA</th>
-                  <th>2nd CA</th>
-                  <th>EXAM</th>
-                  <th>TOTAL</th>
-                  <th>LAST UPDATED</th>
-                  <th></th>
+                  <th>ADMISSION NUMBER</th>
+                  <th>NAME</th>
+                  <th>CLASS</th>
+                  <th>SCHOOL FEES</th>
                   <th></th>
                 </tr>
               </thead>
               <tbody>
               {% for first in firsts_page_obj %}
+              {% if first.school_fees %}
                 <tr class="table-success">
-                  <td>{{first.created|timesince}} ago</td>
+                  <td>{{first.student.created|timesince}}</td>
                   <td><strong>{{first.session}} | Third Term</strong></td>
-                  <td><strong><a href="">{{first.student.username}} | {{first.student.first_name}} {{first.student.last_name}}</a></strong></td>
-                  <th>{{first.subject}}</th>
-                  <th>{{first.ca1}}</th>
-                  <th>{{first.ca2}}</th>
-                  <th>{{first.exam}}</th>
-                  <th>{{first.total}}</th>
-                  <td>{{first.updated|timesince}} ago</td>
-                  <td class="text-center"><a href="result/update/{{first.id}}"><button type="button" class="btn btn-sm btn-primary text-warning"><strong><i class="fa fa-edit fa-1x text-white"></i> &nbspModify</strong></button></a></td>
-                  <td class="text-center"><a href="result/delete/{{first.id}}"><button type="button" class="btn btn-sm btn-danger text-white"><strong><i class="fa fa-trash fa-1x text-white"></i> &nbspDelete</strong></button></a></td>
+                  <td><strong><a href="">{{first.student.username}}</a></strong></td>
+                  <td><strong><a href="">{{first.student.first_name}} {{first.student.last_name}}</a></strong></td>
+                  <td>{{first.student.classe}}</td>
+                  <td><strong>Paid</strong></td>
+                  <td class="text-center"><a href="result/payment/{{first.id}}"><button type="button" class="btn btn-sm btn-primary text-warning"><strong><i class="fa fa-check-circle fa-1x text-white"></i> &nbspPayment Already Confirmed</strong></button></a></td>
                 </tr>
+              {% else %}
+              <tr class="table-danger">
+                <td>{{first.student.created|timesince}}</td>
+                <td><strong>{{first.session}} | Third Term</strong></td>
+                <td><strong><a href="">{{first.student.username}}</a></strong></td>
+                <td><strong><a href="">{{first.student.first_name}} {{first.student.last_name}}</a></strong></td>
+                <td>{{first.student.classe}}</td>
+                <td><strong>Owing</strong></td>
+                <td class="text-center"><a href="result/payment/{{first.id}}"><button type="button" class="btn btn-sm btn-primary text-warning"><strong><i class="fa fa-question-circle fa-1x text-white"></i> &nbspConfirm Payment</strong></button></a></td>
+              </tr>
+              {% endif %}
               {% endfor %}
               </tbody>
             </table>
