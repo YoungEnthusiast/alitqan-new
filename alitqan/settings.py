@@ -95,7 +95,7 @@ EMAIL_PORT = 587
 # EMAIL_USE_SSL = True
 # EMAIL_PORT = 465
 EMAIL_HOST_USER = 'yustaoab@gmail.com'
-EMAIL_HOST_PASSWORD = 'twnqanloovwgjrsq'
+EMAIL_HOST_PASSWORD = ''
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
